@@ -2,13 +2,16 @@
 
 Source: https://www.interviewcake.com/concept/java/linked-list
 
-	    Worst Case
-space	   O(n)
-prepend    O(1)
-append     O(1)
-lookup	   O(n)
-insert	   O(n)
-delete	   O(n)
+	           Worst Case
+space	           O(n)
+prepend          O(1)
+append           O(1)
+lookup	         O(n)
+insert	         O(n)
+search           O(n)
+delete at tail	 O(n)
+delete at head	 O(1)
+delete at middle O(n)
 
 A linked list organizes items sequentially, with each item storing a pointer to the next one. Picture 
 a linked list like a chain of paperclips linked together. It's quick to add another paperclip to the 
@@ -77,6 +80,10 @@ class MyLinkedList {
       this.size++;
   }
 
+  #decreaseSize = () => {
+    this.size--;
+  }
+
   add = (elementValue) => { 
     if (!this.head) {
       this.#initializeListWithElement(this.#wrapInItemStructure(elementValue));
@@ -101,6 +108,43 @@ class MyLinkedList {
     this.head = elementToAdd;
     this.#increaseSize();
   };
+
+  removeFirst = () => {
+    if(this.size === 0){
+      throw new Error("Cannot remove element from empty Linked List!");
+    }
+
+    if(this.head === this.tail){
+      this.tail = null;
+    }
+
+    this.head = this.head.nextElement;
+    this.#decreaseSize();
+  }
+
+  removeLast = () => {
+    if(this.size === 0){
+      throw new Error("Cannot remove element from empty Linked List!");
+    }
+
+    if(this.head === this.tail){
+      this.head = null;
+      this.tail = null;
+    }
+    else{
+      let currentElement = this.head;
+
+      while(currentElement.nextElement !== this.tail){
+        currentElement = currentElement.nextElement;
+      }
+  
+      this.tail = currentElement;
+      this.tail.nextElement = null;
+      currentElement = null;
+    }
+
+    this.#decreaseSize();
+  }
 }
 
 export { MyLinkedList };

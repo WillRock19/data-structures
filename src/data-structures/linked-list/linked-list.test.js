@@ -18,7 +18,7 @@ describe("MyLinkedList", () => {
     });
   });
 
-  describe("Add fn", () => {
+  describe("add fn", () => {
     describe("when adding a first element to the list", () => {
       let myList;
 
@@ -109,7 +109,7 @@ describe("MyLinkedList", () => {
     });
   });
 
-  describe("Append fn", () => {
+  describe("append fn", () => {
     let myList;
 
     beforeEach(() => {
@@ -146,7 +146,7 @@ describe("MyLinkedList", () => {
     });
   });
 
-  describe("Prepend fn", () => {
+  describe("prepend fn", () => {
     let myList;
 
     beforeEach(() => {
@@ -184,6 +184,129 @@ describe("MyLinkedList", () => {
     test("should increse the size value", () => {
         myList.prepend("Zero");
         expect(myList.size).toBe(2);
+    });
+  });
+
+  describe("removeFirst fn", () => {
+
+    describe("when list is empty", () => {
+      test("should throw an exception", () => {
+        let myList = new MyLinkedList();
+        expect(myList.removeFirst).toThrow("Cannot remove element from empty Linked List!");
+      });
+    });
+
+    describe("when list has only one element", () => {
+      let myList;
+
+      beforeEach(() => {
+        myList = new MyLinkedList();
+        myList.add('Single element');
+      });
+  
+      test("should make head point to null", () => {
+        myList.removeFirst();
+        expect(myList.head).toBeNull();
+      });
+
+      test("should make tail point to null", () => {
+        myList.removeFirst();
+        expect(myList.tail).toBeNull();
+      });
+
+      test("should update size value", () => {
+        myList.removeFirst();
+        expect(myList.size).toBe(0);
+      });
+    });
+
+    describe("when list has multiple elements", () => {
+      let myList;
+
+      beforeEach(() => {
+        myList = new MyLinkedList();
+        myList.add('First item');
+        myList.add('Second item');
+        myList.add('Third item');
+      });
+  
+      test("should make head point to second item", () => {
+        myList.removeFirst();
+        expect(myList.head.currentValue).toEqual("Second item");
+      });
+
+      test("should not change element that tail points to", () => {
+        myList.removeFirst();
+        expect(myList.tail.currentValue).toEqual("Third item");
+      });
+
+      test("should not contain first element", () => {
+        myList.removeFirst();
+        expect(myList.head.currentValue).toEqual("Second item");
+        expect(myList.head.nextElement.currentValue).toEqual("Third item");
+        expect(myList.head.nextElement.nextElement).toBeNull();
+      });
+    });
+  });
+
+  describe("removeLast fn", () => {
+    describe("when list is empty", () => {
+      test("should throw an exception", () => {
+        let myList = new MyLinkedList();
+        expect(myList.removeLast).toThrow("Cannot remove element from empty Linked List!");
+      });
+    });
+
+    describe("when list has only one element", () => {
+      let myList;
+
+      beforeEach(() => {
+        myList = new MyLinkedList();
+        myList.add('Single element');
+      });
+  
+      test("should make head point to null", () => {
+        myList.removeLast();
+        expect(myList.head).toBeNull();
+      });
+
+      test("should make tail point to null", () => {
+        myList.removeLast();
+        expect(myList.tail).toBeNull();
+      });
+
+      test("should update size value", () => {
+        myList.removeLast();
+        expect(myList.size).toBe(0);
+      });
+    });
+
+    describe("when list has multiple elements", () => {
+      let myList;
+
+      beforeEach(() => {
+        myList = new MyLinkedList();
+        myList.add('First item');
+        myList.add('Second item');
+        myList.add('Third item');
+      });
+  
+      test("should make tail point to second item", () => {
+        myList.removeLast();
+        expect(myList.tail.currentValue).toEqual("Second item");
+      });
+
+      test("should not change element that head points to", () => {
+        myList.removeLast();
+        expect(myList.head.currentValue).toEqual("First item");
+      });
+
+      test("should not contain third element", () => {
+        myList.removeLast();
+        expect(myList.head.currentValue).toEqual("First item");
+        expect(myList.head.nextElement.currentValue).toEqual("Second item");
+        expect(myList.head.nextElement.nextElement).toBeNull();
+      });
     });
   });
 });
