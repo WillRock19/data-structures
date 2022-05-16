@@ -309,4 +309,85 @@ describe("MyLinkedList", () => {
       });
     });
   });
+
+  describe("removeItem fn", () => {
+    describe("when list is empty", () => {
+      test("should throw an exception", () => {
+        let myList = new MyLinkedList();
+        expect(myList.removeLast).toThrow("Cannot remove element from empty Linked List!");
+      });
+    });
+
+    describe("when list has only one element", () => {
+      const item = "My element";
+      let myList;
+      
+      beforeEach(() => {
+        myList = new MyLinkedList();
+        myList.add(item);
+      });
+  
+      test("should make head point to null", () => {
+        myList.removeItem(item);
+        expect(myList.head).toBeNull();
+      });
+
+      test("should make tail point to null", () => {
+        myList.removeItem(item);
+        expect(myList.tail).toBeNull();
+      });
+
+      test("should update size value", () => {
+        myList.removeItem(item);
+        expect(myList.size).toBe(0);
+      });
+    });
+
+    describe("when list has multiple elements", () => {
+      const firstItem = "First item";
+      const secondItem = "Second item";
+      const thirdItem = "Third item";     
+      let myList;
+
+      beforeEach(() => {
+        myList = new MyLinkedList();
+        myList.add(firstItem);
+        myList.add(secondItem);
+        myList.add(thirdItem);
+      });
+  
+      test("should remove third element, adjust tail and size", () => {
+        myList.removeItem(thirdItem);
+        expect(myList.tail.currentValue).toEqual(secondItem);
+        expect(myList.size).toBe(2);
+      });
+
+      test("should remove first element, adjust head and size", () => {
+        myList.removeItem(firstItem);
+        expect(myList.head.currentValue).toEqual(secondItem);
+        expect(myList.size).toBe(2);
+      });
+
+      describe("when removing an element between head and tail", () => {
+        
+        beforeEach(() => {
+          myList.removeItem(secondItem);
+        });
+
+        test("should keep head and tail unchanged", () => {
+          expect(myList.head.currentValue).toBe(firstItem);
+          expect(myList.tail.currentValue).toBe(thirdItem);
+        });
+
+        test("should adjust pointers from remaining elements", () => {
+          expect(myList.head.nextElement.currentValue).toBe(thirdItem);
+          expect(myList.head.nextElement.nextElement).toBeNull();
+        });
+
+        test("should update list size", () => {
+          expect(myList.size).toBe(2);
+        });
+      });
+    });
+  });
 });

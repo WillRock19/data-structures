@@ -77,14 +77,31 @@ class MyLinkedList {
   };
 
   #increaseSize = () => {
-      this.size++;
-  }
+    this.size++;
+  };
 
   #decreaseSize = () => {
     this.size--;
-  }
+  };
 
-  add = (elementValue) => { 
+  #findAndRemoveItem = (item) => {
+    let previousElement = this.head; 
+    let currentElement = this.head.nextElement;
+    let itemFound = currentElement.currentValue === item;
+
+    while(!itemFound && currentElement.nextElement){
+      previousElement = currentElement;
+      currentElement = currentElement.nextElement;
+      itemFound = currentElement.currentValue === item;
+    }
+
+    previousElement.nextElement = currentElement.nextElement;
+    currentElement = null;
+
+    this.#decreaseSize();
+  };
+
+  add = (elementValue) => {
     if (!this.head) {
       this.#initializeListWithElement(this.#wrapInItemStructure(elementValue));
     } else {
@@ -95,7 +112,7 @@ class MyLinkedList {
 
   append = (element) => {
     let elementToAdd = this.#wrapInItemStructure(element);
-    
+
     this.tail.nextElement = elementToAdd;
     this.tail = elementToAdd;
     this.#increaseSize();
@@ -110,41 +127,57 @@ class MyLinkedList {
   };
 
   removeFirst = () => {
-    if(this.size === 0){
+    if (this.size === 0) {
       throw new Error("Cannot remove element from empty Linked List!");
     }
 
-    if(this.head === this.tail){
+    if (this.head === this.tail) {
       this.tail = null;
     }
 
     this.head = this.head.nextElement;
     this.#decreaseSize();
-  }
+  };
 
   removeLast = () => {
-    if(this.size === 0){
+    if (this.size === 0) {
       throw new Error("Cannot remove element from empty Linked List!");
     }
 
-    if(this.head === this.tail){
+    if (this.head === this.tail) {
       this.head = null;
       this.tail = null;
-    }
-    else{
+    } else {
       let currentElement = this.head;
 
-      while(currentElement.nextElement !== this.tail){
+      while (currentElement.nextElement !== this.tail) {
         currentElement = currentElement.nextElement;
       }
-  
+
       this.tail = currentElement;
       this.tail.nextElement = null;
       currentElement = null;
     }
 
     this.#decreaseSize();
-  }
+  };
+
+  removeItem = (item) => {
+    if (this.size === 0) {
+      throw new Error("Cannot remove element from empty Linked List!");
+    }
+
+    switch (item) {
+      case this.head.currentValue:
+        return this.removeFirst();
+
+      case this.tail.currentValue:
+        return this.removeLast();
+
+      default:
+        return this.#findAndRemoveItem(item);
+    }
+  };
 }
 
 export { MyLinkedList };
