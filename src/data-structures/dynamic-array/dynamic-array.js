@@ -4,10 +4,10 @@ Source: https://www.interviewcake.com/concept/java/dynamic-array
 
 	    Average Case    Worst Case
 space	    O(n)            O(n)
-lookup	 O(1)            O(1)
-append	 O(1)            O(n)
-insert	 O(n)            O(n)
-delete	 O(n)            O(n)
+lookup	  O(1)            O(1)
+append	  O(1)            O(n)
+insert	  O(n)            O(n)
+delete	  O(n)            O(n)
 
 A dynamic array is an array with a big improvement: automatic resizing.
 
