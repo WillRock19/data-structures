@@ -1,7 +1,7 @@
 import { MyLinkedList } from "./linked-list";
 
 describe("MyLinkedList", () => {
-  describe("Constructor", () => {
+  describe("constructor", () => {
     test("should set size to 0", () => {
       let myList = new MyLinkedList();
       expect(myList.size).toBe(0);
@@ -184,6 +184,29 @@ describe("MyLinkedList", () => {
     test("should increse the size value", () => {
         myList.prepend("Zero");
         expect(myList.size).toBe(2);
+    });
+  });
+
+  describe("peek fn", () => {
+    let list;
+
+    beforeEach(() => {
+      list = new MyLinkedList();
+      list.add(19);
+      list.add(22);
+      list.add(10);
+    });
+    
+    test("should return first element in the list", () => {
+      expect(list.peek()).toBe(19);
+    });
+
+    test("should remove head element from list", () => {
+      list.peek();
+
+      expect(list.head.currentValue).toBe(22);
+      expect(list.tail.currentValue).toBe(10);
+      expect(list.size).toBe(2);
     });
   });
 

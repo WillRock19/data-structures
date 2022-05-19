@@ -126,6 +126,13 @@ class MyLinkedList {
     this.#increaseSize();
   };
 
+  peek = () => {
+    const firstElement = this.head;
+    this.removeFirst();
+
+    return firstElement.currentValue;
+  }
+
   removeFirst = () => {
     if (this.size === 0) {
       throw new Error("Cannot remove element from empty Linked List!");
