@@ -1,6 +1,14 @@
-# Getting Started with Create React App
+# Data Structures with JScript
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). It was created to aggregate the notes of my personal study of different data-structures. Here we have some information about **how/when** use each of the structures, which were created using all common features of JScript (classes, methods, etc).
+
+Each data structure is created with it's own test file, where we define the different applications for each method. Use those tests to gide yourself to understand how it all works :) 
+
+## ToDo
+
+We must create the interface to show this data structures on the browser. Currently, we can only execute then as JScript code.
 
 ## Available Scripts
 
