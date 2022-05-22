@@ -15,7 +15,7 @@ arrays, for instance.
 
 Picture a queue like the line outside a busy restaurant. First come, first served.
 
-                     _______      _______    _______     _______
+                     _______     _______     _______     _______
                     |___1___| - |___2___| - |___3___| - |__100__|
 
 WHERE:
@@ -36,7 +36,8 @@ USES:
 
     -> Web servers: use queues to manage requests—page requests get fulfilled in the order they're received.
 
-    -> Processes: wait in the CPU scheduler's queue for their turn to run.*/
+    -> Processes: wait in the CPU scheduler's queue for their turn to run.
+*/
 
 
 class QueueWithList {

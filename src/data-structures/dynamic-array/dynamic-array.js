@@ -38,70 +38,119 @@ WEAKNESSES:
        which takes O(n) time.*/
 
 class MyDynamicArray {
+  #perceivedArrayLength;
+  #actualArrayLength;
+  #internalArray;
+
   constructor() {
-    this.perceivedArrayLength = arguments.length;
-    this.actualArrayLength = arguments.length * 2;
-    this.internalArray = new Array(this.actualArrayLength);
+    this.#perceivedArrayLength = arguments.length;
+    this.#actualArrayLength = arguments.length * 2;
+    this.#internalArray = new Array(this.#actualArrayLength);
 
     for (let index = 0; index < arguments.length; index++) {
-      this.internalArray[index] = arguments[index];
+      this.#internalArray[index] = arguments[index];
     }
   }
 
   #resizeInternalArray = () => {
-    let newArraySize = this.actualArrayLength * 2;
+    let newArraySize = this.#actualArrayLength * 2;
     let newArray = new Array(newArraySize);
 
-    for (let index = 0; index < this.internalArray.length; index++) {
-      newArray[index] = this.internalArray[index];
+    for (let index = 0; index < this.#internalArray.length; index++) {
+      newArray[index] = this.#internalArray[index];
     }
 
-    this.internalArray = newArray;
-    this.actualArrayLength = this.internalArray.length;
+    this.#internalArray = newArray;
+    this.#actualArrayLength = this.#internalArray.length;
 
     newArray = null;
     newArraySize = null;
   };
 
   #internalArrayNotFull = () => {
-    return this.perceivedArrayLength < this.actualArrayLength;
+    return this.#perceivedArrayLength < this.#actualArrayLength;
   };
 
-  length = () => {
-    return this.perceivedArrayLength;
+  size = () => {
+    return this.#perceivedArrayLength;
   };
 
   push = (element) => {
     if (this.#internalArrayNotFull()) {
-      this.internalArray[this.perceivedArrayLength] = element;
-      this.perceivedArrayLength++;
+      this.#internalArray[this.#perceivedArrayLength] = element;
+      this.#perceivedArrayLength++;
     } else {
       this.#resizeInternalArray();
       this.push(element);
     }
   };
 
+  remove = (element) => {
+    for(let index = 0; index < this.#perceivedArrayLength; index++){
+      if(this.#internalArray[index] === element) {
+        this.removeAt(index);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  removeAt = (indexToExclude) => {
+    if (indexToExclude >= this.#perceivedArrayLength || indexToExclude < 0) {
+      throw new Error(
+        `Index out of bounds! The index ${indexToExclude} does not exist inside the array!`
+      );
+    }
+
+    let newArray = new Array(this.#actualArrayLength - 1);
+    let newArrayIndex = 0;
+
+    this.#internalArray.forEach((element, currentIndex) => {
+      if(currentIndex !== indexToExclude){
+        newArray[newArrayIndex] = element;
+        newArrayIndex++;
+      }
+    });
+
+    this.#actualArrayLength--;
+    this.#perceivedArrayLength--;
+    this.#internalArray = newArray;
+  }
+
+  indexOf = (element) => {
+    for(let index = 0; index < this.#perceivedArrayLength; index++){
+      if(this.#internalArray[index] === element) {
+        return index;
+      }
+    }
+    return -1;
+  }
+
+  contains = (element) => {
+    return this.indexOf(element) !== -1;
+  }
+
   values = () => {
-    return this.internalArray.slice(0, this.perceivedArrayLength);
+    return this.#internalArray.slice(0, this.#perceivedArrayLength);
   };
 
   isEmpty = () => {
-    return this.perceivedArrayLength === 0;
+    return this.#perceivedArrayLength === 0;
   };
 
   clearContent = () => {
-    this.internalArray = new Array(0);
-    this.perceivedArrayLength = 0;
+    this.#internalArray = new Array(0);
+    this.#perceivedArrayLength = 0;
   };
 
   elementAt = (index) => {
-    if (index >= this.perceivedArrayLength || index < 0) {
+    if (index >= this.#perceivedArrayLength || index < 0) {
       throw new Error(
         `Index out of bounds! The index ${index} does not exist inside the array!`
       );
     }
 
-    return this.internalArray[index];
+    return this.#internalArray[index];
   };
 }
 
