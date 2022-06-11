@@ -3,7 +3,7 @@
 Source: https://www.interviewcake.com/concept/java/array
 
 	    Worst Case
-space	O(n)
+space	  O(n)
 lookup	O(1)
 append	O(1)
 insert	O(n)
@@ -24,16 +24,35 @@ WEAKNESSES:
     -> Costly inserts and deletes: You have to "scoot over" the other elements to fill in or close gaps, which takes worst-case O(n) time.*/
 
 class MyArrayAsClass {
-  constructor() {
+  #numberOfElementsAllowed;
+  
+  constructor(numberOfElementsAllowed) {
     this.length = 0;
-
-    for (let key in arguments) {
-      this[key] = arguments[key];
-      this.length += 1;
-    }
+    this.#numberOfElementsAllowed = numberOfElementsAllowed;
   }
 
-  count = () => this.length;
+  #reachMaximumOfElementsAllowed = () => {
+    return this.length === this.#numberOfElementsAllowed;
+  }
+
+  count = () => this.length
+  
+  push = (element) => {
+    if(this.#reachMaximumOfElementsAllowed()){
+      throw new Error('Cannot push element! Array already full');
+    }
+    const positionToInsert = this.length;
+    this[positionToInsert] = element;
+    this.length++;
+  };
+
+  pop = () => {
+    if(this.length === 0) return null;
+
+    const positionToRemove = this.length;
+    this[positionToRemove] = null;
+    this.length--;
+  }
 }
 
 function myArrayAsFunction() {

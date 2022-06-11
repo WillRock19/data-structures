@@ -102,7 +102,7 @@ class MyDynamicArray {
       );
     }
 
-    let newArray = new Array(this.#actualArrayLength - 1);
+    let newArray = new Array(this.#actualArrayLength);
     let newArrayIndex = 0;
 
     this.#internalArray.forEach((element, currentIndex) => {
@@ -112,7 +112,6 @@ class MyDynamicArray {
       }
     });
 
-    this.#actualArrayLength--;
     this.#perceivedArrayLength--;
     this.#internalArray = newArray;
   }

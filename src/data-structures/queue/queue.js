@@ -4,11 +4,27 @@ import { MyLinkedList } from "../linked-list/linked-list";
 
 Source: https://www.interviewcake.com/concept/python/queue
 
+If implemented with an array:
+
+	      Average Case
+space	      O(n)
+enqueue     O(1)
+dequeue     O(n)
+peek        O(1)
+
+If implemented with a Linked-List:
+
 	      Worst Case
 space	     O(n)
 enqueue    O(1)
 dequeue    O(1)
 peek       O(1)
+
+It's usually implemented with a List, NOT an array, because the dequeue operation would take too much
+if you used an array. Imagine that we have to remove the first element but keep the others, then keep
+adding elements to the end of the array as the queue grows... OR shifting the values inside the array
+every time the first value is dequeue - which would make the operation of dequeue be O(n) It's just 
+not worth it, ya know?
 
 A queue stores items in a "first-in, first-out" (FIFO) order. They can be implemented with lists or
 arrays, for instance.

@@ -1,5 +1,5 @@
 /*
-I. PRIORITY QUEUES
+I. PRIORITY QUEUES (PQ)
 
 Is an abstract data type (ADT) that operates similar to a normal queue except that each element has
 a certain priority. The priority of the elements determine the order in which elements are removed
@@ -53,5 +53,10 @@ IV. WHERE IT'S USED?
 
     -> Best First Search (BFS) algorithms;
     
-    -> Used by Minimum Spanning Tree (MST) algorithms;*/
+    -> Used by Minimum Spanning Tree (MST) algorithms;
+    
+    
+    https://www.delftstack.com/pt/howto/javascript/javascript-hashmap/
+    
+    */
 
