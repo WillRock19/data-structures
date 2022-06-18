@@ -52,9 +52,12 @@ class MyDynamicArray {
     }
   }
 
+  #newArraySize = () => {
+    return this.#actualArrayLength * 2;
+  }
+
   #resizeInternalArray = () => {
-    let newArraySize = this.#actualArrayLength * 2;
-    let newArray = new Array(newArraySize);
+    let newArray = new Array(this.#newArraySize());
 
     for (let index = 0; index < this.#internalArray.length; index++) {
       newArray[index] = this.#internalArray[index];
@@ -64,7 +67,6 @@ class MyDynamicArray {
     this.#actualArrayLength = this.#internalArray.length;
 
     newArray = null;
-    newArraySize = null;
   };
 
   #internalArrayNotFull = () => {
