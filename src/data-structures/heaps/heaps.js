@@ -153,33 +153,60 @@ class maximumHeapAsArray {
   };
 
   #lastLeafIndex = () => {
+    if (this.heapIsEmpty()) {
+      return this.#emptyPositionIndex;
+    }
+
     return this.#emptyPositionIndex - 1;
+  };
+
+  #swapValueFromIndexes = (firstIndex, secondIndex) => {
+    const firstValue = this.#heap[firstIndex];
+    const secondValue = this.#heap[secondIndex];
+
+    if(firstValue && secondValue)
+    {
+      this.#heap[firstIndex] = this.#heap[secondIndex];
+      this.#heap[secondIndex] = firstValue;
+    }
   }
 
   #swapRootWithValueFromIndex = (index) => {
-    const indexValue = this.#heap[index];
-
-    this.#heap[index] = this.#heap[0];
-    this.#heap[0] = indexValue;
-  }
+    this.#swapValueFromIndexes(0, index);
+  };
 
   #removeLastLeaf = () => {
     this.#heap.pop();
-  }
+  };
 
-  #indexOfNodeParent = (currentNodeIndex) => {
+  #indexOfParentNode = (currentNodeIndex) => {
     const decimalIndex = currentNodeIndex / 2 - 1;
     return Math.ceil(decimalIndex);
   };
 
-  #sortHeapFromBottomToTop = (currentNodeIndex) => {  
-    if(currentNodeIndex === 0) return;
+  #indexOfBiggestChildrenFromParent = (parentIndex) => {
+    const leftChildIndex = this.#indexOfNodeLeftSon(parentIndex);
+    const rightChildIndex = this.#indexOfNodeRightSon(parentIndex);
 
-    const parentNodeIndex = this.#indexOfNodeParent(currentNodeIndex);
+    const nodeLeftChild = this.#heap[leftChildIndex];
+    const nodeRightChild = this.#heap[rightChildIndex];
+
+    if (nodeLeftChild && nodeRightChild) {
+      return nodeLeftChild > nodeRightChild ? leftChildIndex : rightChildIndex;
+    }
+
+    if (nodeLeftChild) return leftChildIndex;
+    return rightChildIndex;
+  }
+
+  #sortHeapFromBottomToTop = (currentNodeIndex) => {
+    if (currentNodeIndex === 0) return;
+
+    const parentNodeIndex = this.#indexOfParentNode(currentNodeIndex);
     const parentNodeValue = this.#heap[parentNodeIndex];
-    const currentNodeValue  = this.#heap[currentNodeIndex];
+    const currentNodeValue = this.#heap[currentNodeIndex];
 
-    if(currentNodeValue > parentNodeValue){
+    if (currentNodeValue > parentNodeValue) {
       this.#heap[parentNodeIndex] = currentNodeValue;
       this.#heap[currentNodeIndex] = parentNodeValue;
     }
@@ -188,38 +215,26 @@ class maximumHeapAsArray {
   };
 
   #sortHeapFromTopToBottom = (currentNodeIndex) => {
-    if(!this.#heap[currentNodeIndex]) return;
-
-    const leftChildIndex = this.#indexOfNodeLeftSon(currentNodeIndex);
-    const rightChildIndex = this.#indexOfNodeRightSon(currentNodeIndex);
-
-    const nodeLeftChild = this.#heap[leftChildIndex];
-    const nodeRightChild = this.#heap[rightChildIndex];
-
-    if(nodeLeftChild && nodeRightChild)
-    {
-      const biggerChildIndex = nodeLeftChild > nodeRightChild 
-        ? leftChildIndex 
-        : rightChildIndex;
-
-      this.#swapRootWithValueFromIndex(biggerChildIndex);
-      return this.#sortHeapFromTopToBottom(biggerChildIndex);
-    }
-  }
+    if (!this.#heap[currentNodeIndex]) return;
+  
+    const biggerChildIndex = this.#indexOfBiggestChildrenFromParent(currentNodeIndex);
+    
+    this.#swapValueFromIndexes(currentNodeIndex, biggerChildIndex);
+    return this.#sortHeapFromTopToBottom(biggerChildIndex);
+  };
 
   heapIsEmpty = () => {
     return this.#heap.length === 0;
-  }
+  };
 
   heapAsArray = () => {
     return this.#heap;
-  }
+  };
 
   addNode = (value) => {
-    if(this.heapIsEmpty()){
+    if (this.heapIsEmpty()) {
       this.#heap[0] = value;
-    }
-    else{
+    } else {
       this.#heap[this.#emptyPositionIndex] = value;
       this.#sortHeapFromBottomToTop(this.#emptyPositionIndex);
     }
@@ -227,11 +242,11 @@ class maximumHeapAsArray {
   };
 
   deleteRootNode = () => {
-    if(this.heapIsEmpty()){
-      throw Error('Cannot delete value from empty heap!');
+    if (this.heapIsEmpty()) {
+      throw Error("Cannot delete value from empty heap!");
     }
 
-    if(this.#heap.length === 1){
+    if (this.#heap.length === 1) {
       this.#heap = [];
       return;
     }
@@ -245,13 +260,8 @@ class maximumHeapAsArray {
     return 0;
   };
 
-  getValueOfLastLeaf = () => {
-    if(this.heapIsEmpty()){
-      return null;
-    }
-
-    const indexOfLastLeaf = this.#emptyPositionIndex - 1;
-    return this.#heap[indexOfLastLeaf];
+  valueOfLastLeaf = () => {
+    return this.#heap[this.#lastLeafIndex()];
   };
 
   searchValueInHeap = (valueToSearch) => {

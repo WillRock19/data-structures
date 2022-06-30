@@ -75,10 +75,10 @@ describe("MaximumHeapAsArray", () => {
     });
   });
 
-  describe("getValueOfLastLeaf", () => {
-    test("should return null if heap is empty", () => {
+  describe("valueOfLastLeaf", () => {
+    test("should return undefined from root if heap is empty", () => {
       const heap = new maximumHeapAsArray();
-      expect(heap.getValueOfLastLeaf()).toBeNull();
+      expect(heap.valueOfLastLeaf()).toBeUndefined();
     });
 
     test("should return value if heap has only the root element", () => {
@@ -86,7 +86,7 @@ describe("MaximumHeapAsArray", () => {
       const value = 19;
 
       heap.addNode(value);
-      expect(heap.getValueOfLastLeaf()).toBe(value);
+      expect(heap.valueOfLastLeaf()).toBe(value);
     });
 
     test("should return value if heap has multiple elements", () => {
@@ -95,7 +95,7 @@ describe("MaximumHeapAsArray", () => {
       heap.addNode(19);
       heap.addNode(5);
 
-      expect(heap.getValueOfLastLeaf()).toBe(5);
+      expect(heap.valueOfLastLeaf()).toBe(5);
     });
   });
 
@@ -145,7 +145,7 @@ describe("MaximumHeapAsArray", () => {
       maximumHeap.addNode(40);
 
       maximumHeap.deleteRootNode();
-      expect(maximumHeap.heapAsArray()).toEqual([90, 70, 80, 60, 40, 50]);
+      expect(maximumHeap.heapAsArray()).toEqual([90, 70, 80, 40, 60, 50]);
     });
   });
 });
