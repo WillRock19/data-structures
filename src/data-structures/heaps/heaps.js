@@ -257,7 +257,9 @@ class maximumHeapAsArray {
   };
 
   deleteAllNodes = () => {
-    return 0;
+    while(!this.heapIsEmpty()){
+      this.deleteRootNode();
+    }
   };
 
   valueOfLastLeaf = () => {

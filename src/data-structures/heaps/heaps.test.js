@@ -148,4 +148,41 @@ describe("MaximumHeapAsArray", () => {
       expect(maximumHeap.heapAsArray()).toEqual([90, 70, 80, 40, 60, 50]);
     });
   });
+
+  describe('deleteAllNodes', () => {
+    let maximumHeap;
+
+    beforeEach(() => {
+      maximumHeap = new maximumHeapAsArray();
+      maximumHeap.addNode(100);
+    });
+
+    test('should delete all values if heap has only root node', () => {
+      maximumHeap.deleteAllNodes();
+      expect(maximumHeap.heapAsArray()).toEqual([]);
+    });
+
+    test('should should delete all values if heap has two levels', () => {
+      maximumHeap.addNode(90);
+      maximumHeap.addNode(80);
+
+      maximumHeap.deleteAllNodes();
+      expect(maximumHeap.heapAsArray()).toEqual([]);
+    });
+
+    test('should should delete all values if heap has multiple levels', () => {
+      maximumHeap.addNode(90);
+      maximumHeap.addNode(80);
+      maximumHeap.addNode(70);
+      maximumHeap.addNode(60);
+      maximumHeap.addNode(50);
+      maximumHeap.addNode(40);
+      maximumHeap.addNode(30);
+      maximumHeap.addNode(20);
+      maximumHeap.addNode(10);
+
+      maximumHeap.deleteAllNodes();
+      expect(maximumHeap.heapAsArray()).toEqual([]);
+    });
+  });
 });
