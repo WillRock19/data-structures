@@ -135,7 +135,7 @@ Interation N:
 
 With that in mind, we can see that the HEAP SORT takes "n * log(n)".*/
 
-class maximumHeapAsArray {
+class maximumHeap {
   #heap;
   #emptyPositionIndex;
 
@@ -266,11 +266,19 @@ class maximumHeapAsArray {
     return this.#heap[this.#lastLeafIndex()];
   };
 
-  searchValueInHeap = (valueToSearch) => {
-    return 0;
-  };
+  /* Here I could use the .filter() function from JScript, but since this is a educational code base, 
+     I'll just use a simple loop to make sure everyone that reads it understands whats happening. */
+  valueExistsInHeap = (valueToSearch) => {
+    let indexToCheck = 0;
+    let valueFound = false;
 
-  printHeapRow = (indexOfRowToPrint) => {};
+    while(!valueFound && indexToCheck < this.#heap.length)
+    {
+      valueFound = this.#heap[indexToCheck] === valueToSearch; 
+      indexToCheck++;
+    }
+    return valueFound;
+  };
 }
 
-export { maximumHeapAsArray };
+export { maximumHeap };

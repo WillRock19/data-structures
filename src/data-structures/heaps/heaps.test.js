@@ -1,14 +1,14 @@
-import { maximumHeapAsArray } from "./heaps";
+import { maximumHeap } from "./heaps";
 
-describe("MaximumHeapAsArray", () => {
+describe("MaximumHeap", () => {
   describe("heapIsEmpty", () => {
     test("should return true if heap is empty", () => {
-      const heap = new maximumHeapAsArray();
+      const heap = new maximumHeap();
       expect(heap.heapIsEmpty()).toBeTruthy();
     });
 
     test("should return false if heap is not empty", () => {
-      const heap = new maximumHeapAsArray();
+      const heap = new maximumHeap();
       heap.addNode(10);
 
       expect(heap.heapIsEmpty()).toBeFalsy();
@@ -19,7 +19,7 @@ describe("MaximumHeapAsArray", () => {
     let maximumHeap;
 
     beforeEach(() => {
-      maximumHeap = new maximumHeapAsArray();
+      maximumHeap = new maximumHeap();
     });
 
     test("should return empty if heap is empty", () => {
@@ -39,7 +39,7 @@ describe("MaximumHeapAsArray", () => {
     let maximumHeap;
 
     beforeEach(() => {
-      maximumHeap = new maximumHeapAsArray();
+      maximumHeap = new maximumHeap();
     });
 
     test("should add first value to heap", () => {
@@ -77,12 +77,12 @@ describe("MaximumHeapAsArray", () => {
 
   describe("valueOfLastLeaf", () => {
     test("should return undefined from root if heap is empty", () => {
-      const heap = new maximumHeapAsArray();
+      const heap = new maximumHeap();
       expect(heap.valueOfLastLeaf()).toBeUndefined();
     });
 
     test("should return value if heap has only the root element", () => {
-      const heap = new maximumHeapAsArray();
+      const heap = new maximumHeap();
       const value = 19;
 
       heap.addNode(value);
@@ -90,7 +90,7 @@ describe("MaximumHeapAsArray", () => {
     });
 
     test("should return value if heap has multiple elements", () => {
-      const heap = new maximumHeapAsArray();
+      const heap = new maximumHeap();
 
       heap.addNode(19);
       heap.addNode(5);
@@ -103,12 +103,12 @@ describe("MaximumHeapAsArray", () => {
     let maximumHeap;
 
     beforeEach(() => {
-      maximumHeap = new maximumHeapAsArray();
+      maximumHeap = new maximumHeap();
       maximumHeap.addNode(100);
     });
 
     test('should thrown exception when trying to delete element from empty heap', () => {
-      const heap = new maximumHeapAsArray();
+      const heap = new maximumHeap();
 
       expect(() => {
         heap.deleteRootNode();
@@ -153,7 +153,7 @@ describe("MaximumHeapAsArray", () => {
     let maximumHeap;
 
     beforeEach(() => {
-      maximumHeap = new maximumHeapAsArray();
+      maximumHeap = new maximumHeap();
       maximumHeap.addNode(100);
     });
 
@@ -183,6 +183,38 @@ describe("MaximumHeapAsArray", () => {
 
       maximumHeap.deleteAllNodes();
       expect(maximumHeap.heapAsArray()).toEqual([]);
+    });
+  });
+
+  describe('valueExistsInHeap', () => {
+    let maximumHeap;
+
+    beforeEach(() => {
+      maximumHeap = new maximumHeap();
+      maximumHeap.addNode(100);
+    });
+
+    test('should return true if value exists in root heap', () => {
+      expect(maximumHeap.valueExistsInHeap(100)).toBeTruthy();
+    });
+
+    test('should return true if value exists in heap with multiple values', () => {
+      maximumHeap.addNode(90);
+      maximumHeap.addNode(80);
+      maximumHeap.addNode(70);
+      maximumHeap.addNode(60);
+      maximumHeap.addNode(50);
+      maximumHeap.addNode(40);
+      maximumHeap.addNode(30);
+      maximumHeap.addNode(20);
+      maximumHeap.addNode(10);
+
+      expect(maximumHeap.valueExistsInHeap(10)).toBeTruthy();
+    });
+
+
+    test('should return false if value do not exist in heap', () => {
+      expect(maximumHeap.valueExistsInHeap(10)).toBeFalsy();
     });
   });
 });
