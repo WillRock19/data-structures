@@ -353,8 +353,13 @@ const bubbleSort = (collection) => {
 };
 
 const selectionSort = (collection) => {
+  console.log("Entrei no Selection Sort!");
+  console.log(collection);
+
   for (let iteration = 0; iteration < collection.length; iteration++) {
-    let minimumElement = collection[iteration];
+    let currentElement = collection[iteration];
+    let minimumElement = currentElement;
+    let minimumPosition = iteration;
 
     for (
       let indexToCompare = iteration + 1;
@@ -363,9 +368,11 @@ const selectionSort = (collection) => {
     ) {
       if (minimumElement > collection[indexToCompare]) {
         minimumElement = collection[indexToCompare];
+        minimumPosition = indexToCompare;
       }
     }
     collection[iteration] = minimumElement;
+    collection[minimumPosition] = currentElement;
   }
   return collection;
 };

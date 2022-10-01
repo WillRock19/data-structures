@@ -17,22 +17,22 @@ describe("bubbleSort", () => {
   });
 });
 
-// describe("selectionSort", () => {
-//   test("Should order array on best case", () => {
-//     const sortedArray = [14, 20, 25, 31, 44, 55];
-//     expect(selectionSort(sortedArray)).toEqual([14, 20, 25, 31, 44, 55]);
-//   });
+describe("selectionSort", () => {
+  // test("Should order array on best case", () => {
+  //   const sortedArray = [14, 20, 25, 31, 44, 55];
+  //   expect(selectionSort(sortedArray)).toEqual([14, 20, 25, 31, 44, 55]);
+  // });
 
-//   test("Should order array on average case", () => {
-//     const semiSortedArray = [14, 25, 31, 20, 55, 44];
-//     expect(selectionSort(semiSortedArray)).toEqual([14, 20, 25, 31, 44, 55]);
-//   });
+  test("Should order array on average case", () => {
+    const semiSortedArray = [14, 25, 31, 20, 55, 44];
+    expect(selectionSort(semiSortedArray)).toEqual([14, 20, 25, 31, 44, 55]);
+  });
 
-//   test("Should order array on worst case", () => {
-//     const sortedBackwardsArray = [20, 12, 10, 15, 2];
-//     expect(selectionSort(sortedBackwardsArray)).toEqual([2, 10, 12, 15, 20]);
-//   });
-// });
+  test("Should order array on worst case", () => {
+    const sortedBackwardsArray = [20, 12, 10, 15, 2];
+    expect(selectionSort(sortedBackwardsArray)).toEqual([2, 10, 12, 15, 20]);
+  });
+});
 
 describe("insertionSort", () => {
   test("Should order array on best case", () => {
