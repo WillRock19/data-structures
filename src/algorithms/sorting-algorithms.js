@@ -191,7 +191,7 @@ IV. QUICK SORT
 
                               -> "Right pointer" - it could be the last element of the array (in case the 
                                                    pivot is the first element), or the element right before
-                                                   the pivot.
+                                                   the pivot (if it's the last).
 
                             Example:  [4, 6, 1, 5, 3, 7, 2]
 
@@ -353,13 +353,10 @@ const bubbleSort = (collection) => {
 };
 
 const selectionSort = (collection) => {
-  console.log("Entrei no Selection Sort!");
-  console.log(collection);
-
   for (let iteration = 0; iteration < collection.length; iteration++) {
     let currentElement = collection[iteration];
     let minimumElement = currentElement;
-    let minimumPosition = iteration;
+    let indexOfMinimumFound = iteration;
 
     for (
       let indexToCompare = iteration + 1;
@@ -368,11 +365,11 @@ const selectionSort = (collection) => {
     ) {
       if (minimumElement > collection[indexToCompare]) {
         minimumElement = collection[indexToCompare];
-        minimumPosition = indexToCompare;
+        indexOfMinimumFound = indexToCompare;
       }
     }
     collection[iteration] = minimumElement;
-    collection[minimumPosition] = currentElement;
+    collection[indexOfMinimumFound] = currentElement;
   }
   return collection;
 };
@@ -397,28 +394,31 @@ function quickSortInternal(collection, startIndex, endIndex){
   if(startIndex >= endIndex)
     return;
 
-  let pivot = startIndex;
+  const pivot = startIndex;
+  const pivotValue = collection[pivot];
+
   let leftIndex = startIndex + 1;
   let rightIndex = endIndex;
 
-  while(leftIndex < rightIndex)
+  while(leftIndex <= rightIndex)
   {
-    if(collection[leftIndex] > collection[pivot] && collection[rightIndex] < collection[pivot]){
-      const leftValue = collection[leftIndex];
-      collection[leftIndex] = collection[rightIndex];
+    const leftValue = collection[leftIndex];
+    const rightValue = collection[rightIndex];
+
+    if(leftValue > pivotValue && rightValue < pivotValue){
+      collection[leftIndex] = rightValue;
       collection[rightIndex] = leftValue;
     }
 
-    if(collection[leftIndex] <= collection[pivot]){
+    if(leftValue <= pivotValue){
       leftIndex++;
     }
 
-    if(collection[rightIndex] >= collection[pivot]){
+    if(rightValue >= pivotValue){
       rightIndex--;
     }
   }
 
-  const pivotValue = collection[pivot]; 
   collection[pivot] = collection[rightIndex];
   collection[rightIndex] = pivotValue;
 
@@ -426,16 +426,11 @@ function quickSortInternal(collection, startIndex, endIndex){
   quickSortInternal(collection, rightIndex + 1, endIndex);
 }
 
-const quickSort = collection => {
-  console.log(collection);
-  
+const quickSort = collection => { 
   const startIndex = 0;
   const endIndex = collection.length - 1;
 
   quickSortInternal(collection, startIndex, endIndex);
-
-
-  console.log(collection);
   return collection;
 }
 

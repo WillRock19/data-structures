@@ -18,10 +18,10 @@ describe("bubbleSort", () => {
 });
 
 describe("selectionSort", () => {
-  // test("Should order array on best case", () => {
-  //   const sortedArray = [14, 20, 25, 31, 44, 55];
-  //   expect(selectionSort(sortedArray)).toEqual([14, 20, 25, 31, 44, 55]);
-  // });
+  test("Should order array on best case", () => {
+    const sortedArray = [14, 20, 25, 31, 44, 55];
+    expect(selectionSort(sortedArray)).toEqual([14, 20, 25, 31, 44, 55]);
+  });
 
   test("Should order array on average case", () => {
     const semiSortedArray = [14, 25, 31, 20, 55, 44];
@@ -54,15 +54,15 @@ describe("insertionSort", () => {
 });
 
 describe("quickSort", () => {
-  // test("Should order array on average case", () => {
-  //   const semiSortedArray = [14, 25, 31, 20, 55, 44];
-  //   expect(quickSort(semiSortedArray)).toEqual([14, 20, 25, 31, 44, 55]);
-  // });
+  test("Should order array on average case", () => {
+    const semiSortedArray = [14, 25, 31, 20, 55, 44];
+    expect(quickSort(semiSortedArray)).toEqual([14, 20, 25, 31, 44, 55]);
+  });
 
-  // test("Should order array on worst case", () => {
-  //   const sortedArray = [14, 20, 25, 31, 44, 55];
-  //   expect(quickSort(sortedArray)).toEqual([14, 20, 25, 31, 44, 55]);
-  // });
+  test("Should order array on worst case", () => {
+    const sortedArray = [14, 20, 25, 31, 44, 55];
+    expect(quickSort(sortedArray)).toEqual([14, 20, 25, 31, 44, 55]);
+  });
 });
 
 describe("mergeSort", () => {
