@@ -1,220 +1,218 @@
 import { maximumHeap } from "./heaps";
 
-// describe("MaximumHeap", () => {
-//   describe("heapIsEmpty", () => {
-//     test("should return true if heap is empty", () => {
-//       const heap = new maximumHeap();
-//       expect(heap.heapIsEmpty()).toBeTruthy();
-//     });
+describe("MaximumHeap", () => {
+  describe("heapIsEmpty", () => {
+    test("should return true if heap is empty", () => {
+      const heap = new maximumHeap();
+      expect(heap.heapIsEmpty()).toBeTruthy();
+    });
 
-//     test("should return false if heap is not empty", () => {
-//       const heap = new maximumHeap();
-//       heap.addNode(10);
+    test("should return false if heap is not empty", () => {
+      const heap = new maximumHeap();
+      heap.addNode(10);
 
-//       expect(heap.heapIsEmpty()).toBeFalsy();
-//     });
-//   });
+      expect(heap.heapIsEmpty()).toBeFalsy();
+    });
+  });
 
-//   describe("heapAsArray", () => {
-//     let maximumHeap;
+  describe("heapAsArray", () => {
+    let heap;
 
-//     beforeEach(() => {
-//       maximumHeap = new maximumHeap();
-//     });
+    beforeEach(() => {
+      heap = new maximumHeap();
+    });
 
-//     test("should return empty if heap is empty", () => {
-//       expect(maximumHeap.heapAsArray()).toEqual([]);
-//     });
+    test("should return empty if heap is empty", () => {
+      expect(heap.heapAsArray()).toEqual([]);
+    });
 
-//     test("should return the array with all elements added to the heap", () => {
-//       maximumHeap.addNode(99);
-//       maximumHeap.addNode(50);
-//       maximumHeap.addNode(22);
+    test("should return the array with all elements added to the heap", () => {
+      heap.addNode(99);
+      heap.addNode(50);
+      heap.addNode(22);
 
-//       expect(maximumHeap.heapAsArray()).toEqual([99, 50, 22]);
-//     });
-//   });
+      expect(heap.heapAsArray()).toEqual([99, 50, 22]);
+    });
+  });
 
-//   describe("addNode", () => {
-//     let maximumHeap;
+  describe("addNode", () => {
+    let heap;
 
-//     beforeEach(() => {
-//       maximumHeap = new maximumHeap();
-//     });
+    beforeEach(() => {
+      heap = new maximumHeap();
+    });
 
-//     test("should add first value to heap", () => {
-//       maximumHeap.addNode(10);
-//       expect(maximumHeap.heapAsArray()).toEqual([10]);
-//     });
+    test("should add first value to heap", () => {
+      heap.addNode(10);
+      expect(heap.heapAsArray()).toEqual([10]);
+    });
 
-//     test("should add multiple values to heap correctly", () => {
-//       maximumHeap.addNode(100);
-//       maximumHeap.addNode(90);
-//       maximumHeap.addNode(80);
-//       maximumHeap.addNode(70);
-//       maximumHeap.addNode(60);
-//       maximumHeap.addNode(50);
+    test("should add multiple values to heap correctly", () => {
+      heap.addNode(100);
+      heap.addNode(90);
+      heap.addNode(80);
+      heap.addNode(70);
+      heap.addNode(60);
+      heap.addNode(50);
 
-//       expect(maximumHeap.heapAsArray()).toEqual([100, 90, 80, 70, 60, 50]);
-//     });
+      expect(heap.heapAsArray()).toEqual([100, 90, 80, 70, 60, 50]);
+    });
 
-//     test("should reorder list and put second value as root if it is higher than the root", () => {
-//       maximumHeap.addNode(100);
-//       maximumHeap.addNode(101);
+    test("should reorder list and put second value as root if it is higher than the root", () => {
+      heap.addNode(100);
+      heap.addNode(101);
 
-//       expect(maximumHeap.heapAsArray()).toEqual([101, 100]);
-//     });
+      expect(heap.heapAsArray()).toEqual([101, 100]);
+    });
 
-//     test("should reorder list everytime a higher value is added, so all values can follow the directive of a maximum heap", () => {
-//       maximumHeap.addNode(100);
-//       maximumHeap.addNode(150);
-//       maximumHeap.addNode(200);
-//       maximumHeap.addNode(300);
+    test("should reorder list everytime a higher value is added, so all values can follow the directive of a maximum heap", () => {
+      heap.addNode(100);
+      heap.addNode(150);
+      heap.addNode(200);
+      heap.addNode(300);
 
-//       expect(maximumHeap.heapAsArray()).toEqual([300, 200, 150, 100]);
-//     });
-//   });
+      expect(heap.heapAsArray()).toEqual([300, 200, 150, 100]);
+    });
+  });
 
-//   describe("valueOfLastLeaf", () => {
-//     test("should return undefined from root if heap is empty", () => {
-//       const heap = new maximumHeap();
-//       expect(heap.valueOfLastLeaf()).toBeUndefined();
-//     });
+  describe("valueOfLastLeaf", () => {
+    test("should return undefined from root if heap is empty", () => {
+      const heap = new maximumHeap();
+      expect(heap.valueOfLastLeaf()).toBeUndefined();
+    });
 
-//     test("should return value if heap has only the root element", () => {
-//       const heap = new maximumHeap();
-//       const value = 19;
+    test("should return value if heap has only the root element", () => {
+      const heap = new maximumHeap();
+      const value = 19;
 
-//       heap.addNode(value);
-//       expect(heap.valueOfLastLeaf()).toBe(value);
-//     });
+      heap.addNode(value);
+      expect(heap.valueOfLastLeaf()).toBe(value);
+    });
 
-//     test("should return value if heap has multiple elements", () => {
-//       const heap = new maximumHeap();
+    test("should return value if heap has multiple elements", () => {
+      const heap = new maximumHeap();
 
-//       heap.addNode(19);
-//       heap.addNode(5);
+      heap.addNode(19);
+      heap.addNode(5);
 
-//       expect(heap.valueOfLastLeaf()).toBe(5);
-//     });
-//   });
+      expect(heap.valueOfLastLeaf()).toBe(5);
+    });
+  });
 
-//   describe('deleteRootNode', () => {
-//     let maximumHeap;
+  describe("deleteRootNode", () => {
+    let heap;
 
-//     beforeEach(() => {
-//       maximumHeap = new maximumHeap();
-//       maximumHeap.addNode(100);
-//     });
+    beforeEach(() => {
+      heap = new maximumHeap();
+      heap.addNode(100);
+    });
 
-//     test('should thrown exception when trying to delete element from empty heap', () => {
-//       const heap = new maximumHeap();
+    test("should thrown exception when trying to delete element from empty heap", () => {
+      const heapThatThrows = new maximumHeap();
 
-//       expect(() => {
-//         heap.deleteRootNode();
-//       })
-//       .toThrowError('Cannot delete value from empty heap!');
-//     });
+      expect(() => {
+        heapThatThrows.deleteRootNode();
+      }).toThrowError("Cannot delete value from empty heap!");
+    });
 
-//     test('should delete root node if heap has a single element', () => {
-//       maximumHeap.deleteRootNode();
-//       expect(maximumHeap.heapAsArray()).toEqual([]);
-//     });
+    test("should delete root node if heap has a single element", () => {
+      heap.deleteRootNode();
+      expect(heap.heapAsArray()).toEqual([]);
+    });
 
-//     test('should delete root node if heap has two elements and make leaf a root', () => {
-//       maximumHeap.addNode(90);
+    test("should delete root node if heap has two elements and make leaf a root", () => {
+      heap.addNode(90);
 
-//       maximumHeap.deleteRootNode();
-//       expect(maximumHeap.heapAsArray()).toEqual([90]);
-//     });
+      heap.deleteRootNode();
+      expect(heap.heapAsArray()).toEqual([90]);
+    });
 
-//     test('should delete root node if heap has three elements and resort the the heap', () => {
-//       maximumHeap.addNode(90);
-//       maximumHeap.addNode(60);
+    test("should delete root node if heap has three elements and resort the the heap", () => {
+      heap.addNode(90);
+      heap.addNode(60);
 
-//       maximumHeap.deleteRootNode();
-//       expect(maximumHeap.heapAsArray()).toEqual([90, 60]);
-//     });
+      heap.deleteRootNode();
+      expect(heap.heapAsArray()).toEqual([90, 60]);
+    });
 
-//     test('should delete node and sort it all to apply invariant if heap has multiple levels', () => {
-//       maximumHeap.addNode(90);
-//       maximumHeap.addNode(80);
-//       maximumHeap.addNode(70);
-//       maximumHeap.addNode(60);
-//       maximumHeap.addNode(50);
-//       maximumHeap.addNode(40);
+    test("should delete node and sort it all to apply invariant if heap has multiple levels", () => {
+      heap.addNode(90);
+      heap.addNode(80);
+      heap.addNode(70);
+      heap.addNode(60);
+      heap.addNode(50);
+      heap.addNode(40);
 
-//       maximumHeap.deleteRootNode();
-//       expect(maximumHeap.heapAsArray()).toEqual([90, 70, 80, 40, 60, 50]);
-//     });
-//   });
+      heap.deleteRootNode();
+      expect(heap.heapAsArray()).toEqual([90, 70, 80, 40, 60, 50]);
+    });
+  });
 
-//   describe('deleteAllNodes', () => {
-//     let maximumHeap;
+  describe("deleteAllNodes", () => {
+    let heap;
 
-//     beforeEach(() => {
-//       maximumHeap = new maximumHeap();
-//       maximumHeap.addNode(100);
-//     });
+    beforeEach(() => {
+      heap = new maximumHeap();
+      heap.addNode(100);
+    });
 
-//     test('should delete all values if heap has only root node', () => {
-//       maximumHeap.deleteAllNodes();
-//       expect(maximumHeap.heapAsArray()).toEqual([]);
-//     });
+    test("should delete all values if heap has only root node", () => {
+      heap.deleteAllNodes();
+      expect(heap.heapAsArray()).toEqual([]);
+    });
 
-//     test('should should delete all values if heap has two levels', () => {
-//       maximumHeap.addNode(90);
-//       maximumHeap.addNode(80);
+    test("should should delete all values if heap has two levels", () => {
+      heap.addNode(90);
+      heap.addNode(80);
 
-//       maximumHeap.deleteAllNodes();
-//       expect(maximumHeap.heapAsArray()).toEqual([]);
-//     });
+      heap.deleteAllNodes();
+      expect(heap.heapAsArray()).toEqual([]);
+    });
 
-//     test('should should delete all values if heap has multiple levels', () => {
-//       maximumHeap.addNode(90);
-//       maximumHeap.addNode(80);
-//       maximumHeap.addNode(70);
-//       maximumHeap.addNode(60);
-//       maximumHeap.addNode(50);
-//       maximumHeap.addNode(40);
-//       maximumHeap.addNode(30);
-//       maximumHeap.addNode(20);
-//       maximumHeap.addNode(10);
+    test("should should delete all values if heap has multiple levels", () => {
+      heap.addNode(90);
+      heap.addNode(80);
+      heap.addNode(70);
+      heap.addNode(60);
+      heap.addNode(50);
+      heap.addNode(40);
+      heap.addNode(30);
+      heap.addNode(20);
+      heap.addNode(10);
 
-//       maximumHeap.deleteAllNodes();
-//       expect(maximumHeap.heapAsArray()).toEqual([]);
-//     });
-//   });
+      heap.deleteAllNodes();
+      expect(heap.heapAsArray()).toEqual([]);
+    });
+  });
 
-//   describe('valueExistsInHeap', () => {
-//     let maximumHeap;
+  describe("valueExistsInHeap", () => {
+    let heap;
 
-//     beforeEach(() => {
-//       maximumHeap = new maximumHeap();
-//       maximumHeap.addNode(100);
-//     });
+    beforeEach(() => {
+      heap = new maximumHeap();
+      heap.addNode(100);
+    });
 
-//     test('should return true if value exists in root heap', () => {
-//       expect(maximumHeap.valueExistsInHeap(100)).toBeTruthy();
-//     });
+    test("should return true if value exists in root heap", () => {
+      expect(heap.valueExistsInHeap(100)).toBeTruthy();
+    });
 
-//     test('should return true if value exists in heap with multiple values', () => {
-//       maximumHeap.addNode(90);
-//       maximumHeap.addNode(80);
-//       maximumHeap.addNode(70);
-//       maximumHeap.addNode(60);
-//       maximumHeap.addNode(50);
-//       maximumHeap.addNode(40);
-//       maximumHeap.addNode(30);
-//       maximumHeap.addNode(20);
-//       maximumHeap.addNode(10);
+    test("should return true if value exists in heap with multiple values", () => {
+      heap.addNode(90);
+      heap.addNode(80);
+      heap.addNode(70);
+      heap.addNode(60);
+      heap.addNode(50);
+      heap.addNode(40);
+      heap.addNode(30);
+      heap.addNode(20);
+      heap.addNode(10);
 
-//       expect(maximumHeap.valueExistsInHeap(10)).toBeTruthy();
-//     });
+      expect(heap.valueExistsInHeap(10)).toBeTruthy();
+    });
 
-
-//     test('should return false if value do not exist in heap', () => {
-//       expect(maximumHeap.valueExistsInHeap(10)).toBeFalsy();
-//     });
-//   });
-// });
+    test("should return false if value do not exist in heap", () => {
+      expect(heap.valueExistsInHeap(10)).toBeFalsy();
+    });
+  });
+});
