@@ -60,13 +60,11 @@ const binarySearch = (sortedCollection, elementToFind) => {
   while (firstIndex !== lastIndex) {
     let middleIndex = Math.floor(sortedCollection.length / 2);
 
-    if(sortedCollection[middleIndex] === elementToFind) {
-        return true;
-    }
-    else if (sortedCollection[middleIndex] > elementToFind) {
+    if (sortedCollection[middleIndex] === elementToFind) {
+      return true;
+    } else if (sortedCollection[middleIndex] > elementToFind) {
       lastIndex = middleIndex - 1;
-    }
-    else {
+    } else {
       firstIndex = middleIndex + 1;
     }
 
@@ -76,7 +74,12 @@ const binarySearch = (sortedCollection, elementToFind) => {
   return sortedCollection[firstIndex] === elementToFind;
 };
 
-const recursiveHelper = (sortedCollection, elementToFind, firstIndex, lastIndex) => {
+const recursiveHelper = (
+  sortedCollection,
+  elementToFind,
+  firstIndex,
+  lastIndex
+) => {
   if (firstIndex >= lastIndex) {
     return false;
   }
@@ -84,24 +87,32 @@ const recursiveHelper = (sortedCollection, elementToFind, firstIndex, lastIndex)
   const sumOfIndexes = firstIndex + lastIndex;
   const middleIndex = Math.floor(sumOfIndexes / 2);
 
-  if(sortedCollection[middleIndex] === elementToFind){
+  if (sortedCollection[middleIndex] === elementToFind) {
     return true;
-  }
-  else if(sortedCollection[middleIndex] > elementToFind){
+  } else if (sortedCollection[middleIndex] > elementToFind) {
     lastIndex = middleIndex - 1;
-  }
-  else {
+  } else {
     firstIndex = middleIndex + 1;
   }
 
-  return recursiveHelper(sortedCollection, elementToFind, firstIndex, lastIndex);
-}
+  return recursiveHelper(
+    sortedCollection,
+    elementToFind,
+    firstIndex,
+    lastIndex
+  );
+};
 
 const binarySearchRecursive = (sortedCollection, elementToFind) => {
   let firstIndex = 0;
   let lastIndex = sortedCollection.length - 1;
 
-  return recursiveHelper(sortedCollection, elementToFind, firstIndex, lastIndex);
+  return recursiveHelper(
+    sortedCollection,
+    elementToFind,
+    firstIndex,
+    lastIndex
+  );
 };
 
 export { linearSearch, binarySearch, binarySearchRecursive };
