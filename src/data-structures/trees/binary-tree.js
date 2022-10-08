@@ -4,9 +4,9 @@ import { QueueWithList } from "../queue/queue";
 
 I. DEFINITION
 
-It's a particular case of a tree. It has a specific particularity: each node, AT MAXIMUM, can have
-TWO childs in the tree. If it has more than two childs, it's not a Binary tree anymore. There are 
-different types of binary trees and different stages for ach one.
+The BinaryTree is a particular case of a tree. It has a specific particularity: each node, AT 
+MAXIMUM, can have TWO childs in the tree. If it has more than two childs, it's not a Binary tree 
+anymore. There are different types of binary trees and different stages for ach one.
 
 If we'd try to represent the Binary tree as a structure of Nodes, it would be something like this:
 
