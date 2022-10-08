@@ -67,7 +67,7 @@ class QueueWithList {
     }
   }
 
-  poll = () => {
+  peek = () => {
     const firstElement = this.#internalList.peek();
     return firstElement;
   }

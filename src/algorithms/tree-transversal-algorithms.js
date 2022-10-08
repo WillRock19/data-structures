@@ -148,27 +148,24 @@ II. DEEP FIRST SEARCH (DFS)
 */
 
 const breathFirst = (rootTreeNode) => {
-  if(rootTreeNode === null){
+  if (rootTreeNode === null) {
     return;
   }
 
   const queue = new QueueWithList(rootTreeNode);
   const transversal = [];
 
-  while(!queue.isEmpty())
-  {
+  while (!queue.isEmpty()) {
     const currentElement = queue.peek();
     transversal.push(currentElement);
 
-    if(currentElement.leftChild)
-      queue.offer(currentElement.leftChild);
+    if (currentElement.leftChild) queue.offer(currentElement.leftChild);
 
-    if(currentElement.rightChild)
-      queue.offer(currentElement.rightChild);
+    if (currentElement.rightChild) queue.offer(currentElement.rightChild);
   }
 
   return transversal;
-}
+};
 
 function preOrderHelper(treeNode, transversal) {
   if (treeNode === null) {
@@ -176,16 +173,15 @@ function preOrderHelper(treeNode, transversal) {
   }
 
   transversal.push(treeNode.value);
-
   preOrderHelper(treeNode.leftChild, transversal);
   preOrderHelper(treeNode.rightChild, transversal);
 
   return transversal;
 }
 
-const preOrder = (treeNode) => {
+const preOrder = (tree) => {
   const transversal = [];
-  return preOrderHelper(treeNode, transversal);
+  return preOrderHelper(tree.rootNode(), transversal);
 };
 
 function inOrderHelper(treeNode, transversal) {
@@ -200,9 +196,9 @@ function inOrderHelper(treeNode, transversal) {
   return transversal;
 }
 
-const inOrder = (treeNode) => {
+const inOrder = (tree) => {
   const transversal = [];
-  return inOrderHelper(treeNode, transversal);
+  return inOrderHelper(tree.rootNode(), transversal);
 };
 
 function postOrderHelper(treeNode, transversal) {
@@ -217,9 +213,9 @@ function postOrderHelper(treeNode, transversal) {
   return transversal;
 }
 
-const postOrder = (treeNode) => {
+const postOrder = (tree) => {
   const transversal = [];
-  return postOrderHelper(treeNode, transversal);
+  return postOrderHelper(tree.rootNode(), transversal);
 };
 
-export {preOrder, inOrder, postOrder, breathFirst}
+export { preOrder, inOrder, postOrder, breathFirst };

@@ -84,16 +84,28 @@ There are different types of Binary trees, each one with some particularity:
 
 */
 
+function isNullOrUndefined(value) {
+  return value === null || value === undefined;
+}
+
 class Node {
-  #value;
-  #rightChild;
-  #leftChild;
+  value;
+  rightChild;
+  leftChild;
 
   constructor(value) {
-    this.#leftChild = null;
-    this.#rightChild = null;
-    this.#value = value;
+    this.leftChild = null;
+    this.rightChild = null;
+    this.value = value;
   }
+
+  noLeftChild = () => {
+    return this.leftChild === null;
+  };
+
+  noRightChild = () => {
+    return this.rightChild === null;
+  };
 }
 
 class BinaryTree {
@@ -104,22 +116,42 @@ class BinaryTree {
   }
 
   #prepareNodeToBeAdded = (valueToAdd) => {
+    if (isNullOrUndefined(valueToAdd)) {
+      return null;
+    }
+
     return valueToAdd instanceof Node ? valueToAdd : new Node(valueToAdd);
   };
 
-  #addNodeToEmptyLeaf = (currentNode, nodeToAdd) => {
-    if (currentNode.leftChild === null) {
+  #addNodeWithBreathFirstSearch = (nodeToAdd) => {
+    if (!this.#rootNode) {
+      this.#rootNode = nodeToAdd;
+      return;
+    }
+
+    const helperQueue = new QueueWithList(this.#rootNode);
+    let currentNode = null;
+
+    while (!helperQueue.isEmpty()) {
+      currentNode = helperQueue.peek();
+
+      if (currentNode.noLeftChild() || currentNode.noRightChild()) break;
+
+      if (currentNode.leftChild) helperQueue.offer(currentNode.leftChild);
+
+      if (currentNode.rightChild) helperQueue.offer(currentNode.rightChild);
+    }
+
+    if (currentNode.noLeftChild()) {
       currentNode.leftChild = nodeToAdd;
-    } else if (currentNode.rightChild === null) {
+    } else if (currentNode.noRightChild()) {
       currentNode.rightChild = nodeToAdd;
-    } else {
-      this.addNodeToEmptyLeaf(currentNode.leftChild, nodeToAdd);
     }
   };
 
   add = (newValue) => {
     const newNode = this.#prepareNodeToBeAdded(newValue);
-    this.#addNodeToEmptyLeaf(this.#rootNode, newNode);
+    this.#addNodeWithBreathFirstSearch(newNode);
   };
 
   rootNode = () => {
@@ -131,8 +163,6 @@ class BinaryTree {
   inOrderSearch = (valueToSearch) => {};
 
   postOrderSearch = (valueToSearch) => {};
-
-  deleteTreeUsingBFS = () => {};
 }
 
 export { Node, BinaryTree };
