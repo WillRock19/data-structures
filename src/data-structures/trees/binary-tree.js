@@ -1,3 +1,5 @@
+import { QueueWithList } from "../queue/queue";
+
 /*
 
 I. DEFINITION
@@ -81,3 +83,56 @@ There are different types of Binary trees, each one with some particularity:
                   3          3       3            |             6            
 
 */
+
+class Node {
+  #value;
+  #rightChild;
+  #leftChild;
+
+  constructor(value) {
+    this.#leftChild = null;
+    this.#rightChild = null;
+    this.#value = value;
+  }
+}
+
+class BinaryTree {
+  #rootNode;
+
+  constructor(rootValue) {
+    this.#rootNode = this.#prepareNodeToBeAdded(rootValue);
+  }
+
+  #prepareNodeToBeAdded = (valueToAdd) => {
+    return valueToAdd instanceof Node ? valueToAdd : new Node(valueToAdd);
+  };
+
+  #addNodeToEmptyLeaf = (currentNode, nodeToAdd) => {
+    if (currentNode.leftChild === null) {
+      currentNode.leftChild = nodeToAdd;
+    } else if (currentNode.rightChild === null) {
+      currentNode.rightChild = nodeToAdd;
+    } else {
+      this.addNodeToEmptyLeaf(currentNode.leftChild, nodeToAdd);
+    }
+  };
+
+  add = (newValue) => {
+    const newNode = this.#prepareNodeToBeAdded(newValue);
+    this.#addNodeToEmptyLeaf(this.#rootNode, newNode);
+  };
+
+  rootNode = () => {
+    return this.#rootNode;
+  };
+
+  preOrderSearch = (valueToSearch) => {};
+
+  inOrderSearch = (valueToSearch) => {};
+
+  postOrderSearch = (valueToSearch) => {};
+
+  deleteTreeUsingBFS = () => {};
+}
+
+export { Node, BinaryTree };

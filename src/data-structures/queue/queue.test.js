@@ -20,11 +20,11 @@ describe("QueueWithList", () => {
     });
   });
 
-  describe("poll fn", () => {
+  describe("peek fn", () => {
     describe("when queue is empty", () => {
       test("should throw an exception", () => {
         const queue = new QueueWithList();
-        expect(() => queue.poll()).toThrowError();
+        expect(() => queue.peek()).toThrowError();
       });
     });
 
@@ -36,12 +36,12 @@ describe("QueueWithList", () => {
       });
 
       test("should return element from queue", () => {
-        const element = queue.poll();
+        const element = queue.peek();
         expect(element).toBe("First");
       });
 
       test("should remove element from queue", () => {
-        queue.poll();
+        queue.peek();
         expect(queue.size()).toBe(0);
       });
     });
@@ -56,14 +56,14 @@ describe("QueueWithList", () => {
         });
   
         test("should return the first element from queue", () => {
-          const element = queue.poll();
+          const element = queue.peek();
           expect(element).toBe("First");
         });
   
         test("should return all first elements until list is empty", () => {
-          const first = queue.poll();
-          const second = queue.poll();
-          const third = queue.poll();
+          const first = queue.peek();
+          const second = queue.peek();
+          const third = queue.peek();
 
           expect(first).toBe("First");
           expect(second).toBe("Second");
