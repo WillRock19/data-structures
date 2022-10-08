@@ -32,8 +32,8 @@ import { QueueWithList } from "../data-structures/queue/queue";
     
     The complexity of BFS is O(n), and the space complexity is O(n) because we need to use a queue
     to make it all happen and the maximum amount of elements we'll add in the queue is n. You don't
-    necessarially have to use the transversal (see the code to understand more), so we don't need
-    to count it on the space complexity.
+    necessarially have to use the transversal (an array were we add all the nodes we visited during
+    the algorithm execution), so we don't need to count it on the space complexity.
     
 
 II. DEEP FIRST SEARCH (DFS)
@@ -153,30 +153,30 @@ const breathFirst = (rootTreeNode) => {
   }
 
   const queue = new QueueWithList(rootTreeNode);
-  const transversal = [];
+  const nodesVisited = [];
 
   while (!queue.isEmpty()) {
     const currentElement = queue.peek();
-    transversal.push(currentElement);
+    nodesVisited.push(currentElement);
 
     if (currentElement.leftChild) queue.offer(currentElement.leftChild);
 
     if (currentElement.rightChild) queue.offer(currentElement.rightChild);
   }
 
-  return transversal;
+  return nodesVisited;
 };
 
-function preOrderHelper(treeNode, transversal) {
+function preOrderHelper(treeNode, nodesVisited) {
   if (treeNode === null) {
     return;
   }
 
-  transversal.push(treeNode.value);
-  preOrderHelper(treeNode.leftChild, transversal);
-  preOrderHelper(treeNode.rightChild, transversal);
+  nodesVisited.push(treeNode.value);
+  preOrderHelper(treeNode.leftChild, nodesVisited);
+  preOrderHelper(treeNode.rightChild, nodesVisited);
 
-  return transversal;
+  return nodesVisited;
 }
 
 const preOrder = (tree) => {
@@ -184,16 +184,16 @@ const preOrder = (tree) => {
   return preOrderHelper(tree.rootNode(), transversal);
 };
 
-function inOrderHelper(treeNode, transversal) {
+function inOrderHelper(treeNode, nodesVisited) {
   if (treeNode === null) {
     return;
   }
 
-  inOrderHelper(treeNode.leftChild, transversal);
-  transversal.push(treeNode.value);
-  inOrderHelper(treeNode.rightChild, transversal);
+  inOrderHelper(treeNode.leftChild, nodesVisited);
+  nodesVisited.push(treeNode.value);
+  inOrderHelper(treeNode.rightChild, nodesVisited);
 
-  return transversal;
+  return nodesVisited;
 }
 
 const inOrder = (tree) => {
@@ -201,16 +201,16 @@ const inOrder = (tree) => {
   return inOrderHelper(tree.rootNode(), transversal);
 };
 
-function postOrderHelper(treeNode, transversal) {
+function postOrderHelper(treeNode, nodesVisited) {
   if (treeNode === null) {
     return;
   }
 
-  postOrderHelper(treeNode.leftChild, transversal);
-  postOrderHelper(treeNode.rightChild, transversal);
-  transversal.push(treeNode.value);
+  postOrderHelper(treeNode.leftChild, nodesVisited);
+  postOrderHelper(treeNode.rightChild, nodesVisited);
+  nodesVisited.push(treeNode.value);
 
-  return transversal;
+  return nodesVisited;
 }
 
 const postOrder = (tree) => {
