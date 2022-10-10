@@ -1,10 +1,12 @@
+import { QueueWithList } from "../queue/queue";
+
 /*
 
 I. DEFINITION
 
-It's a particular case of a tree. It has a specific particularity: each node, AT MAXIMUM, can have
-TWO childs in the tree. If it has more than two childs, it's not a Binary tree anymore. There are 
-different types of binary trees and different stages for ach one.
+The BinaryTree is a particular case of a tree. It has a specific particularity: each node, AT 
+MAXIMUM, can have TWO childs in the tree. If it has more than two childs, it's not a Binary tree 
+anymore. There are different types of binary trees and different stages for ach one.
 
 If we'd try to represent the Binary tree as a structure of Nodes, it would be something like this:
 
@@ -81,3 +83,86 @@ There are different types of Binary trees, each one with some particularity:
                   3          3       3            |             6            
 
 */
+
+function isNullOrUndefined(value) {
+  return value === null || value === undefined;
+}
+
+class Node {
+  value;
+  rightChild;
+  leftChild;
+
+  constructor(value) {
+    this.leftChild = null;
+    this.rightChild = null;
+    this.value = value;
+  }
+
+  noLeftChild = () => {
+    return this.leftChild === null;
+  };
+
+  noRightChild = () => {
+    return this.rightChild === null;
+  };
+}
+
+class BinaryTree {
+  #rootNode;
+
+  constructor(rootValue) {
+    this.#rootNode = this.#prepareNodeToBeAdded(rootValue);
+  }
+
+  #prepareNodeToBeAdded = (valueToAdd) => {
+    if (isNullOrUndefined(valueToAdd)) {
+      return null;
+    }
+
+    return valueToAdd instanceof Node ? valueToAdd : new Node(valueToAdd);
+  };
+
+  #addNodeWithBreathFirstSearch = (nodeToAdd) => {
+    if (!this.#rootNode) {
+      this.#rootNode = nodeToAdd;
+      return;
+    }
+
+    const helperQueue = new QueueWithList(this.#rootNode);
+    let currentNode = null;
+
+    while (!helperQueue.isEmpty()) {
+      currentNode = helperQueue.peek();
+
+      if (currentNode.noLeftChild() || currentNode.noRightChild()) break;
+
+      if (currentNode.leftChild) helperQueue.offer(currentNode.leftChild);
+
+      if (currentNode.rightChild) helperQueue.offer(currentNode.rightChild);
+    }
+
+    if (currentNode.noLeftChild()) {
+      currentNode.leftChild = nodeToAdd;
+    } else if (currentNode.noRightChild()) {
+      currentNode.rightChild = nodeToAdd;
+    }
+  };
+
+  add = (newValue) => {
+    const newNode = this.#prepareNodeToBeAdded(newValue);
+    this.#addNodeWithBreathFirstSearch(newNode);
+  };
+
+  rootNode = () => {
+    return this.#rootNode;
+  };
+
+  preOrderSearch = (valueToSearch) => {};
+
+  inOrderSearch = (valueToSearch) => {};
+
+  postOrderSearch = (valueToSearch) => {};
+}
+
+export { Node, BinaryTree };
