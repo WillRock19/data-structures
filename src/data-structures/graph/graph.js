@@ -179,6 +179,18 @@ class NodeWithAdjacentList {
   setAsVisited = () => {
     this.#visited = true;
   };
+
+  adjacentList = () => this.#adjacentList;
+
+  append = (node) => {
+    if (!(node instanceof NodeWithAdjacentList)) {
+      throw new Error(
+        "Element is not a NodeWithAdjacentList and cannot be appended!"
+      );
+    }
+
+    this.#adjacentList.push(node);
+  };
 }
 
 export { NodeWithAdjacentList };
