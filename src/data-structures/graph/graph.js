@@ -160,3 +160,25 @@ List index     Value    Weight
         ...
 
 */
+
+class NodeWithAdjacentList {
+  #value;
+  #adjacentList;
+  #visited;
+
+  constructor(value) {
+    this.#value = value;
+    this.#adjacentList = [];
+    this.#visited = false;
+  }
+
+  value = () => this.#value;
+
+  hasBeenVisited = () => this.#visited;
+
+  setAsVisited = () => {
+    this.#visited = true;
+  };
+}
+
+export { NodeWithAdjacentList };
