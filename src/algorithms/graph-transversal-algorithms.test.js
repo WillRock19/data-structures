@@ -1,4 +1,4 @@
-import { breathFirst } from "./graph-transversal-algorithms";
+import { breathFirst, depthFirst } from "./graph-transversal-algorithms";
 import { NodeWithAdjacentList } from "../data-structures/graph/graph";
 
 function createSimpleGraphForTest() {
@@ -42,9 +42,25 @@ describe("BreathFirst", () => {
       expect(visitedNodes).toBeNull();
     });
 
-    test("Should return the visited nodes in correct order", () => {
+    test("Should return the visited nodes in expected order", () => {
       const visitedNodes = breathFirst(initialNode);
       expect(visitedNodes).toEqual(["A", "B", "C", "D", "E", "F", "G"]);
+    });
+  });
+});
+
+describe("DepthFirst", () => {
+  describe("When using nodes with adjacenList", () => {
+    test("Should return null if initialNode is null", () => {
+      const visitedNodes = depthFirst(null);
+      expect(visitedNodes).toBeNull();
+    });
+
+    test("Should return the visited nodes in expected order", () => {
+      const initialNode = createSimpleGraphForTest();
+      const visitedNodes = depthFirst(initialNode);
+
+      expect(visitedNodes).toEqual(["A", "B", "E", "F", "C", "D", "G"]);
     });
   });
 });

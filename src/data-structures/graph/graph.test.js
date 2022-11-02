@@ -40,7 +40,7 @@ describe("NodeWithAdjacentList", () => {
       expect(() => {
         node.append(24);
       }).toThrow(
-        "Element is not of type NodeWithAdjacentList and cannot be appended!"
+        "Element is not a NodeWithAdjacentList and cannot be appended!"
       );
     });
 
