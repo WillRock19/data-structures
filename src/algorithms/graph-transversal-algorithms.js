@@ -1,25 +1,28 @@
 import { QueueWithList } from "../data-structures/queue/queue";
 
 /*
-While we are navigating throught all nodes in the graph, we should check then after they are 
-visited. That way we can guarantee we never visit the same node twice, avoiding ending up in
-some type of infinite loop.
 
-We can use two algorithms to graph transversal:
+I. INTRODUCTION
 
-    -> Breadth-first Search;
-    -> Depth-first Search;
+  While we are navigating throught all nodes in the graph, we should check then after they are 
+  visited. That way we can guarantee we never visit the same node twice, avoiding ending up in
+  some type of infinite loop.
 
-The behaviour will be similar to how they work in trees, so I'll not repeat what I've already
-write in the tree-transversal-algorithms.js file.
+  We can use two algorithms to graph transversal:
 
-Since this is going to be the first example of this, we'll use those two algorithms only for graph
-nodes with adjacentList. Later, I may implement versions of those algorithms for other types of
-nodes (using matrix, maybe?) just to cover every single one in this project.
+      -> Breadth-first Search;
+      -> Depth-first Search;
 
-But, that's something for later implementations.
+  The behaviour will be similar to how they work in trees, so I'll not repeat what I've already
+  write in the tree-transversal-algorithms.js file.
 
-BREADTH-FIRST SEARCH
+  Since this is going to be the first example of this, we'll use those two algorithms only for graph
+  nodes with adjacentList. Later, I may implement versions of those algorithms for other types of
+  nodes (using matrix, maybe?) just to cover every single one in this project.
+
+  But, that's something for later implementations.
+
+II. BREADTH-FIRST SEARCH
 
   We add the first node to a Queue and then set it as visited. Then we remove it from tje queue, add
   it to the list of visited nodes and get all its adjacent nodes. We add then to the queue, then start
@@ -57,9 +60,10 @@ BREADTH-FIRST SEARCH
       
     3. Restart loop while queue is not empty
 
-DEPTH-FIRST SEARCH
+III. DEPTH-FIRST SEARCH
 
-  We iterate through all elements of a specific branch as deep as possible, then goes to the next branch.
+  We iterate through all elements of a specific branch as deep as possible, then goes to the next 
+  branch. In the end of the day, DFS algorithms means "go deep".
 
   
                          A
@@ -69,12 +73,28 @@ DEPTH-FIRST SEARCH
                   E    F   G      
 
   In the above graph, first we'd go "A -> B -> E", then we'd go up to B, use it as the new root node
-  and go "B -> F" (which could also be interpreted as going "A -> B -> F"), then "A -> C" and so on 
-  until every node has been visited. To do this we could use a STACK or a RECURSION method. The latter 
-  is more common, so it's the one we're going to use.
+  and go "B -> F" (which could be interpreted as going "A -> B -> F"), then "A -> C" and so on until 
+  every node has been visited. To do this we could use a STACK or a RECURSION method. The latter is 
+  more common, so it's the one we're going to use.
 
   We receive a node, mark it as visited and ad it to the visited list. Then we'll check all of it's
-  adjacent nodes and visit the ones that have not been visited, one by one, recursively. */
+  adjacent nodes and visit the ones that have not been visited, one by one, recursively. 
+  
+IV. TIME COMPLEXITY
+
+  For both of then, the time complexity os O(v + e), where "v" is the number of vertices (or number
+  of nodes, if you prefer) and "e" is the number of edges. Since we can have graphs where each edge 
+  has a different weight, it must be take into account when we are defining the time complexity. Both
+  DFS and BFS follows this as time complexity.
+
+V. SPACE COMPLEXITY
+
+  The space complexity is the number of vertices (nodes) that we have. You may imagine that if we are
+  using a queue to BFS and recursion to the DFS, the space complexity should be different. And you're
+  right, it should.
+
+  But if we take the worst case scenario for each of then, we'd have to travel to every single node,
+  so the space complexity would be something of O(v).*/
 
 const breathFirst = (startingNode) => {
   if (startingNode === null) {
