@@ -315,4 +315,44 @@ const betterConstructTree = (preOrder, inOrder) => {
   const rootNode = betterConstructTreeHelper(preOrder.reverse(), inOrder, 0, inOrder.length(), memoryObject);
 }
 
+/*
+INVERT BINARY TREE
+  To do this, we usually work with recursion. Each node of each level of the tree becomes the root
+  during the recursion, and each of it's children becomes the left and right child. In other words:
+  we create a loop recursion, goes through each of the three's level working with it's elements as
+  subtrees.
+  
+  When we talk about "intert a  Binary tree", we are basically saying we want to make it's elements
+  as "every element from the right will become an element from the left". In other words:
+
+              1
+            /   \
+          2       3
+        /  \    /  \
+       4    5  6    7
+
+  Will become:
+
+              1
+            /   \
+          3       2
+        /  \    /  \
+       7    6  5    4
+*/
+
+const invertTree = (rootNode) => {
+  if(rootNode == null){
+    return;
+  }
+
+  const temporary = rootNode.leftChild;
+  rootNode.leftChild = rootNode.rightChild;
+  rootNode.rightChild = temporary;
+
+  invertTree(rootNode.leftChild);
+  invertTree(rootNode.rightChild);
+
+  return rootNode;
+}
+
 export { twoSums, minStack, maxStack, reverseLinkedList };
