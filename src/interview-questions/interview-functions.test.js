@@ -44,3 +44,14 @@ describe("Min Stack", () => {
                     - getMin(): retrieves the minimum element in the stack;
   */
 });
+
+
+describe("Construct Binary tree from pre-order and in-order traversal", () => {
+  /*
+      Definition: Given a preorder and inorder traversal of a tree, construct the binary tree. You
+                  may assume that duplicates do not exist in the tree.
+
+                    - preorder = [1,2,4,8,9,5,10,11,3,6,7]
+                    - inorder  = [8,4,9,2,10,5,11,1,6,3,7]
+  */
+});

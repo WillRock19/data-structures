@@ -59,6 +59,9 @@ II. DEEP FIRST SEARCH (DFS)
     go to its right child. If it has one, we print it. Then we backtrack to the root's parent and 
     start the process all over again with it beeing our new root node.
 
+    If I was printing the element when travelling through the tree in pre-order, I would print the
+    element as soon as I reach it's node. 
+
 
                                 A           
                             /       \
@@ -107,6 +110,11 @@ II. DEEP FIRST SEARCH (DFS)
 
           SEARCH ORDER: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
+    If I was printing the element when travelling through the tree in in-order, I would print the
+    element the second time I visit that node (imagine that when I reach 0 I go left, there's a null
+    value... I go back, print 0, then go right... null value... go back to 1... and that's the second
+    time I go to one, then I print it... and so on). 
+
     3. Post-order
 
     It follows the sequence "left -> right -> root". So we visit the leftmost and print it. Then try
@@ -125,6 +133,9 @@ II. DEEP FIRST SEARCH (DFS)
                         D     E   F        
 
             SEARCH ORDER: D, E, B, F, C, A
+
+    If I was printing the element when travelling through the tree in post-order, I would print the
+    element the last time I visit that node. 
 
 
     WHEN TO CHOOSE EACH?
