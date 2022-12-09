@@ -60,3 +60,12 @@ describe("Invert a Binary tree", () => {
 
 });
 
+describe("Construct Binary tree from pre-order traversal", () => {
+/*
+      Definition: construct Binary Search Tree from a preorder transversal
+
+        - input  = [8,5,1,7,10,12]
+        - output = [8,5,10,1,7,Null,12] 
+*/
+});
+

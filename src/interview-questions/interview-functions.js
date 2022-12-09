@@ -1,4 +1,5 @@
-import {Node} from '../data-structures/trees/binary-tree'
+import { Node } from "../data-structures/trees/binary-tree";
+import { StackWithArray } from "../data-structures/stack/stack";
 
 /*
 TWO SUMS
@@ -63,7 +64,7 @@ MIN STACK
   from there too. That's how you can do this.
 */
 
-class minStack{}
+class minStack {}
 
 /*
 MAX STACK
@@ -78,7 +79,7 @@ MAX STACK
     minStack = [7, 8]
 */
 
-class maxStack{}
+class maxStack {}
 
 /*
 REVERSE SINGLE LINKED LIST
@@ -162,20 +163,19 @@ REVERSE SINGLE LINKED LIST
   use these three variables each time.*/
 
 const reverseLinkedList = (linkedListHead) => {
-    let preceedingNode = null;
-    let currentNode = linkedListHead;
-    let successorNode = null;
-  
-    while(currentNode != null)
-    {
-      successorNode = currentNode.next();
-      currentNode.setNext(preceedingNode);
-      preceedingNode = currentNode;
-      currentNode = successorNode;
-    }
+  let preceedingNode = null;
+  let currentNode = linkedListHead;
+  let successorNode = null;
 
-    return preceedingNode;
-}
+  while (currentNode != null) {
+    successorNode = currentNode.next();
+    currentNode.setNext(preceedingNode);
+    preceedingNode = currentNode;
+    currentNode = successorNode;
+  }
+
+  return preceedingNode;
+};
 
 /*
 CONSTRUCT BINARY TREE FROM PRE-ORDER AND IN-ORDER TRANSVERSALS
@@ -247,11 +247,11 @@ CONSTRUCT BINARY TREE FROM PRE-ORDER AND IN-ORDER TRANSVERSALS
     Then we go on until every element has been checked.*/
 
 const constructTree = (preOrder, inOrder) => {
-  if(inOrder.length === 0){
+  if (inOrder.length === 0) {
     return;
   }
 
-  if(preOrder.length === 1){
+  if (preOrder.length === 1) {
     return new Node(preOrder[0]);
   }
 
@@ -260,10 +260,13 @@ const constructTree = (preOrder, inOrder) => {
   const treeNode = new Node(inOrder[indexInOrder]);
 
   treeNode.leftChild = constructTree(preOrder, inOrder.slice(0, indexInOrder));
-  treeNode.rightChild = constructTree(preOrder, inOrder.slice(indexInOrder + 1));
+  treeNode.rightChild = constructTree(
+    preOrder,
+    inOrder.slice(indexInOrder + 1)
+  );
 
   return treeNode;
-}
+};
 
 /*
   The constructTree is a good solution, but there are some problems in the approach. First of, we
@@ -290,20 +293,38 @@ const constructTree = (preOrder, inOrder) => {
   root - in other words: this should be our stop condition.
   */
 
-const betterConstructTreeHelper = (preOrder, inOrder, leftPointer, rightPointer, indexesByValue) => {
-  if(leftPointer >= rightPointer){
+const betterConstructTreeHelper = (
+  preOrder,
+  inOrder,
+  leftPointer,
+  rightPointer,
+  indexesByValue
+) => {
+  if (leftPointer >= rightPointer) {
     return;
   }
-  
+
   const currentNumber = preOrder.pop();
   const rootNode = new Node(currentNumber);
   const inOrderIndex = indexesByValue[currentNumber];
 
-  rootNode.leftChild = betterConstructTreeHelper(preOrder, inOrder, leftPointer, inOrderIndex, indexesByValue);
-  rootNode.leftChild = betterConstructTreeHelper(preOrder, inOrder, inOrderIndex+1, rightPointer, indexesByValue);
+  rootNode.leftChild = betterConstructTreeHelper(
+    preOrder,
+    inOrder,
+    leftPointer,
+    inOrderIndex,
+    indexesByValue
+  );
+  rootNode.leftChild = betterConstructTreeHelper(
+    preOrder,
+    inOrder,
+    inOrderIndex + 1,
+    rightPointer,
+    indexesByValue
+  );
 
   return rootNode;
-}
+};
 
 const betterConstructTree = (preOrder, inOrder) => {
   const memoryObject = {};
@@ -312,8 +333,14 @@ const betterConstructTree = (preOrder, inOrder) => {
     memoryObject[value] = index;
   });
 
-  const rootNode = betterConstructTreeHelper(preOrder.reverse(), inOrder, 0, inOrder.length(), memoryObject);
-}
+  const rootNode = betterConstructTreeHelper(
+    preOrder.reverse(),
+    inOrder,
+    0,
+    inOrder.length(),
+    memoryObject
+  );
+};
 
 /*
 INVERT BINARY TREE
@@ -341,7 +368,7 @@ INVERT BINARY TREE
 */
 
 const invertTree = (rootNode) => {
-  if(rootNode == null){
+  if (rootNode == null) {
     return;
   }
 
@@ -353,6 +380,119 @@ const invertTree = (rootNode) => {
   invertTree(rootNode.rightChild);
 
   return rootNode;
-}
+};
+
+/*
+CREATE BINARY TREE FROM PRE-ORDER TRAVERSAL
+  Since it's a binary tree, we know the element in the left of a node has a value lower than the 
+  node, and the element to the right has a higher value. Because of this, we have a way to build
+  our binary tree.
+
+  For instance: we could implement a solution that iterates through the pre-order array, get each
+  number, then iterate the binary tree checking where that number should go, and then add it to the
+  correct point. 
+  
+  It's easy, it's good. But it takes too long. The time complexity would be O(n^2), because we have
+  to iterate every element in the binary three for every element in the pre-order array, so O(n) and
+  O(n), repectively.  Why we have to compare N times in the three? Imagine our input array is the
+  following:
+
+    [9, 8, 7, 6]
+
+  Then, when we add each element, we have to compare to each level. (9 is root, then 8 to the left,
+  then 7 to the left of 8, then 6 to the left of 7, etc). If I add more elements to the input, like
+  5, 4, 3, 2, 1, I have to keep going to the left of each node, so, in the end, I would have traveled
+  through all N elements as N levels in the Binary tree.
+
+  So, we can think in a second solution.
+
+  Well, we know that preOrder[0] is the root, and that the first element which is higher than that
+  element will go to the right of it. With that in mind, we could break the pre-order transversal
+  into groups:
+
+    input = [5,3,1,4,8,6,9]
+
+    It would become two groups:
+
+      root = 5
+      left = [3,1,4]
+      right = [8,6,9]
+
+    Now, we can start to add the nodes, and for each level the first element in the array will be
+    the leftChild, the first element higher that array[0] will indicate the start of the rightChilds.
+    
+    It works, and it takes only O(n^2). Why? Because for each node being added we have to search for
+    the node greater than that (so, two loops, one inside the other, nˆ2).
+
+  A third solution could be a little different.
+
+  This would use a stack. We could create a stack, and everytime we add a node we'd add it to the
+  stack too. Then, everytime we check a element in preOrder to create the node, we check if the
+  element being added is lower than the last element in the stack. If it is, we add the new element 
+  as leftChild node. If it doesn't, we pop the last element from the stack and compare with the new
+  last element. 
+  
+  If we get to the point where the number being added is higher than the element popped, but lower 
+  to the new last element from the stack, we add our number as righChild node of the element that
+  was popped.
+
+  Example:
+
+    preOrder = [5,3,1,4,8,6,9]
+    stack    = [5,3,1]
+    
+              5
+            /
+          3
+        /
+      1
+
+    Now we have to add 4. Then we do:
+
+      4 < 1? No. Pop 1 from stack
+
+      4 < 3? No. Pop 3 from stack.
+
+      4 < 5? Yes. Add 4 as rightChild from node 3 and add 4 to the stack
+
+    And we'd have:
+
+              5
+            /
+          3
+        /   \
+      1      4
+
+    Finally, when we get to 8 we'll remove every element from the stack. When the stack is empty,
+    we add the element to the right of the node in our pointer (in this case, 8 would become the
+    rightChild of 5).
+
+    This solution works as O(n) as time compexity. Since we are not doing any slicing, we do not
+    have more space than we already start with.  
+*/
+
+const binaryTreeFromPreOrder = (preOrder) => {
+  const root = new Node(preOrder[0]);
+  const stack = new StackWithArray();
+  stack.push(root);
+
+  for (let index = 1; index < preOrder.length; index++) {
+    if (preOrder[index] < stack.peek()) {
+      const node = new Node(preOrder[index]);
+      stack.peek().leftChild = node;
+      stack.push(node);
+    } else {
+      let lastElementFromStack = null;
+
+      while (!stack.empty() && stack.peek().value < preOrder[index]) {
+        lastElementFromStack = stack.pop();
+      }
+
+      const node = new Node(preOrder[index]);
+      lastElementFromStack.rightChild = node;
+      stack.push(node);
+    }
+  }
+};
 
 export { twoSums, minStack, maxStack, reverseLinkedList };
