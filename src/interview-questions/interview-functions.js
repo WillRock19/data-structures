@@ -495,4 +495,94 @@ const binaryTreeFromPreOrder = (preOrder) => {
   }
 };
 
+/*
+  LONGEST PALINDROMIC SUBSTRING
+    A Palindrome is a string that can be read the same if you try to read it from left to right
+    and from right to left. Also, by definition, every single letter is considered a palindrome.
+
+    Example:
+
+      input = "xyxracecart"
+      Palindromes substrings = ["xyx", "racecar"]
+
+    One approach would be:
+
+      1. Find all possible substrings;
+      2. Define which of them are palindromics;
+      3. Find the longest;
+
+    The problem: time complexity. It's three loops in a row, so O(nˆ3). We need something better.
+
+    We could go through another route:
+
+      1. Create only the palindromic substrings;
+      2. Check which one is longest while creating;
+
+    But, how to find the palindromic substring? Well, we could iterate through each character of
+    the string and then find both characters to the left and right. If they are equal, that's a
+    possible palindrome. We can do this jumping through each characters in the string until we have
+    all answers.
+
+    Example:
+
+      "xyx"     -> when we get to y in the middle, both letters in right and left of it are equal.
+
+      "racecar" -> when we get to the e in the middle, both letters in the right and left are equal.
+
+
+    That works if our substring is odd. But what if it's even? What if we have:
+
+      input = "xyxraccart"
+
+    In this case, threat each character as the middle of the substring wouldn't work, basically
+    because there's no middle where elements to the right and left are the same in the substring
+    "raccar", but it is a palindrome nevertheless.
+
+    To solve this, we can use BOTH ways while iterating through the word: first we usa a element
+    as the center of the substring, let's call it X, then check that element and the one after it,
+    both of then being our new X, and in each of this times we start checking everything to the left
+    and to the right of X. If we find out that characters to the left and right of X are equal, we
+    have a palindrome substring.
+
+    Example:
+
+      - input = "xyxraccart"
+
+      1. First loop:
+
+        - middle = x;
+        - element to left = null
+        - element to right = y
+
+        We have a palindrome? Yes: X itself.
+        Then check:
+
+          - middle = xy;
+          - element to left = null
+          - element to right = x
+
+        We have a palindrome? No.
+
+      2. Second loop:
+
+        - middle = y;
+        - element to left = x
+        - element to right = x
+
+        We have a palindrome? Yes: XYX
+        Then check:
+
+          - middle = yx;
+          - element to left = x
+          - element to right = r
+
+        We have a palindrome? No.
+
+      3. And we go on through every character in the string.
+
+    The complexity here would be O(nˆ2) because of the first loop, where we iterate through each
+    character in the string, and a second loop, while we iterate through the caracters in the left
+    and right of the selected one.
+*/
+
 export { twoSums, minStack, maxStack, reverseLinkedList };

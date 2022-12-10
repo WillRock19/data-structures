@@ -69,3 +69,42 @@ describe("Construct Binary tree from pre-order traversal", () => {
 */
 });
 
+describe("Detect Capital", () => {
+/*
+      Definition: Given a word, you need to judge wether the usage of capitals in it is right or not.
+                  We define the usage of capitals in a word to be right when one of the following 
+                  cases holds:
+
+                  * All letters in this word are capitals, like "HELLO";
+                  * All letters in this word are not capitals, like "game";
+                  * Only the first letter in this word is capital, like "Word";
+                  * Otherwise, we define that this word doesn't use capitals in a right way;
+*/
+});
+
+describe("Reverse strings", () => {
+/*
+      Definition: Write a function that reverses a string (The input string elements are given as
+                  array of characters).
+
+                  * Do not alllocate extra space for another array. You must do this by modifying
+                    the input array in-place with O(1) extra memory;
+
+                  * All the elements are printable ascii characters (symbols, numbers and alphabets)
+                  
+          - input  = ['s', 'h', 'u', 'b', 'h', 'a', 'h']
+          - output = ['m', 'a', 'h', 'b', 'u', 'h', 's']
+*/
+});
+
+describe("Logest palyndromic substring", () => {
+/*
+      Definition: Given a string mystr, find the longest palindromic substring to mystr
+      
+          - input:  "babad"
+          - output: "bab"
+
+          - input:  "ytracecarxy"
+          - output: "racecar"
+*/
+});
