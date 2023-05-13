@@ -382,7 +382,211 @@ V. MERGE SORT
         not make a prior check to see if it's already sorted).
         
         Since we can do this work with recursion but need to create a new array in the end. the space complexity
-        would be O(n).*/
+        would be O(n).
+
+        
+  VI. COUNTING SORT
+      
+    VI.0. More here:
+    
+      -> https://www.programiz.com/dsa/counting-sort
+
+      -> https://www.youtube.com/watch?v=pEJiGC-ObQE
+
+    VI.1. How does it work: This algorithm is different from the previous ones because it does not work in a
+                            comparison base, like then. We'll not compare the elements of the array, but check
+                            how many times they show inside the original array and use this information to sort
+                            it.
+                            
+                            Firstly, you'll have to find the maximum element inside the array and put it in a
+                            variable called key. Let's see it in the example bellow:
+
+                              originalArray = [2, 1, 1, 0, 2, 5, 4, 0, 2, 8, 7, 7, 9, 2, 0, 1, 9]
+                              n = 17
+                              maximumValue = 9
+
+                            So, in this example we know that our array is legth 17 but the maximum value inside
+                            of it is 9. So key = 9. Now, we know the values inside of our array goes from 0 to key.
+
+                            Now, we create a second array, called count, which will contain x elements, where 
+                            x = key. So, for our example here, this new array, that we shall call count, will
+                            have a lenght = 9 + 1.
+
+                              count = [_, _, _, _, _, _, _, _, _, _]
+                            
+                            Now, we'll iterate the original array, and for each value Y, we go to count[Y] and
+                            increment the value inside of it by one. At the end of our iteration, we'll have
+                            each position i in the count array having the amount of times the value i appeared
+                            inside the original array. 
+                            
+                            So, for our previous originalArray example, we'd have:
+
+                              count = [3, 3, 4, 0, 1, 1, 0, 2, 1, 2]
+
+                            Because 0 appeared three times on originalArray, count[0] = 3. Because 1 also appeared 
+                            three times, count[1] = 3. Because 6 appeared zero times in the original array, count[6] = 0.
+                            And so on and fourth.
+
+                            Now that we have this, we need to make the count array actually shows in which position
+                            the value i should go in the original array. That's kind of an interesting mind concept, 
+                            so let's try to get there together using some examples, ok? Come with me, my friend:
+
+                              Currently, we have count = [3, 3, 4, 0, 1, 1, 0, 2, 1, 2], ok? So that means that we have
+                              an array where:
+
+                                Value:    3, 3, 4, 0, 1, 1, 0, 2, 1, 2
+                                Position: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+
+                              Which, as I explained before, means that the value 0 repeats itself three times in the 
+                              original array, the value 2 repeats itself 4 times in the original array, and so on and
+                              fourth.
+
+                              Would you agree with me that we already have then sorted? We know the original array must
+                              be something like:
+
+                                originalSorted = [0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 4, ...]
+
+                              But we must understand exactly how to get each positions. Well, we know 0 repeats itself
+                              three times, so we can begin assuming the beginning of the count array will be the same
+                              as it is now:
+                              
+                                countArrayChanged = [3, _, _, _, _, _, _, _, _]
+                              
+                              Then, we can start to iterate throught the values of the original count array. 
+
+                              Now, keep in mind what the count array actually means: for each i position, we can read 
+                              the count array as: "the value i is repeated count[i] times in the originalArray". 
+                              
+                              So, assuming 0 is repeated 3 times and that our first iteration is i = 1 and count[1] = 3, 
+                              we know for a fact that after the first three zeros we'll repeat the number 1 also three 
+                              times.
+
+                              If I put the three 0 and three 1 one after the other in a new array, I'd have:
+
+                                0, 0, 0, 1, 1, 1, ...
+
+                              Would you agree that they take 6 positions of this hipothetical new array? Then, if I go to
+                              the next iteration, where i = 2 and count[2] = 4, I know I would have to repeat the number 2
+                              four times after the three 1s, so I would have:
+
+                                0, 0, 0, 1, 1, 1, 2, 2, 2, 2 ...
+
+                              Ok, so let's summerize what we are talking:
+
+                                count[0] = 3, which means I have three 0s in the originalArray.
+                                count[1] = 3, which means I have three 1s in the originalArray.
+                                count[2] = 4, which means I have four  2s in the originalArray.
+                              
+                              So, I know that:
+                              
+                                For i = 0, I have the value 0 appearing three times, from the index zero to index 2. 
+                                For i = 1, I have the value 1 appearing three times, from the index 2 to index 5. 
+                                For i = 2, I have the value 2 appearing four  times, from the index 6 to index 9. 
+
+                              In other words: 
+
+                                Value:    0, 0, 0, 1, 1, 1, 2, 2, 2, 2, ...
+                                Position: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ...
+
+                              
+                              Ok. So, let's talk about the representation above. Reading it, We know that we must repeat the 
+                              value "0" three times (from position 0 until position 2); then we must repeat the value "1" three
+                              times (from position  3 until position 5); then, we repeat the value "2" four times, from position
+                              6 until position 9.
+                              
+                              What does that means? It means we have an upper bound, a limit, the point where our current value 
+                              of i should not appear anymore in the originalArray. We should repeat the value i until the index 
+                              in the originalArray is smaller than the UpperBound. So, in other words, we could see it as:
+
+                                count[0]:
+
+                                  Amount_to_repeat = 3;
+                                  UpperBound = Amount_to_repeat;  
+                                  So, we repeat value "0" from position 0 to "UpperBound - 1" (3 - 1 = 2).
+                              
+                                count[1]:
+
+                                  Amount_to_repeat = 3;
+                                  UpperBound = UpperBound of count[0] + Amount_to_repeat => 3 + 3 = 6;
+                                  So, we repeat value "1" from the last empty position (3) ti "UpperBound - 1" (6 - 1 = 5).
+
+                                count[2]:
+
+                                  Amount_to_repeat = 4;
+                                  UpperBound = UpperBound of count[0] + UpperBound of count[1] + Amount_to_repeat => 3 + 3 + 4 = 10;
+                                  So we repeat value "0" from the last empty position (6) to "UpperBound - 1" (10 - 1 = 2).
+
+                                And so on.
+
+                              We could now change the count array to represent this. How? By iterating through each element of the
+                              count array from i >= 1 until the end of it, then getting the value in each position and adding it 
+                              to the value of all positions that came prior. So our new representation of the count array would be
+                              something like:
+
+                                count    = [3, 3, 4,   0,  1,  1,  0,  2,  1,  2]
+                                countNew = [3, 6, 10, 10, 11, 12, 12, 14, 15, 17]
+
+                              I hope that this explanation was enougth for you to understand how do we get the final form of the count
+                              array, the one we shall use to sort the originalArray.
+
+                              Another way to see it, which might be easier, is:
+
+                                count    = [3,                      3,                      4,                      0,                      1,                      1,                      0,                      2,                      1,                      2]
+                                countNew = [3, countNew[0] + count[1], countNew[1] + count[2], countNew[2] + count[3], countNew[3] + count[4], countNew[4] + count[5], countNew[5] + count[6], countNew[6] + count[7], countNew[7] + count[8], countNew[8] + count[9]]
+                              
+                              After all that, all values in countNew will represent the correct upperBounds of the elements in the 
+                              originalArray.
+
+                              OBS: Bear in mind that I represented the idea in two arrays to make it clearer. In our code sample, we'll do 
+                                   it in a single array, to make the space complexity under check.
+
+
+                              After we have the countNew ready, we can finally sort the array. How do we do it?
+                              
+                                1. Start iteration from i = n (length of originalArray) until i = 0;
+
+                                2. For each element of the original array, originalArray[i] (which we'll call X), where "i" is current 
+                                   iteration, check the upperBound position of X by using the countNew[X] value. Let's call it upperBoundOfX;
+
+                                3. Now that we have the upperBound, we can put X in the sorted array. So:
+                                
+                                   sortedArray[upperBoundOfX - 1] = X;
+
+                                4. Go to next iteration;
+
+                              At the end, the array should be sorted.
+
+
+     VI.2. Time Complexity
+
+              WORST-CASE       BEST-CASE        AVERAGE-CASE    SPACE USED
+               O(n + k)        O(n + k)           O(n + k)        O(max)   
+
+        The complexity is always the same because  no matter how the elements are placed in the array, the 
+        algorithm goes through n + k times. In the end, this code use basically four loops. Since no loop 
+        is inside the other, the complexity never goes up to O(n).
+
+        There is no comparison between any elements, so it is better than comparison based sorting techniques. 
+        But, it is bad if the integers are very large because the array of that size should be made. That's 
+        why the Space is O(max), where max represents the maximum number inside the original, unsorted array.
+
+
+     VI.3. Negative numbers
+
+        Counting sort is usually not suitable for arrays with negative numbers, as it requires non-negative 
+        integers as keys to count the elements. However, there are some variations of counting sort that can 
+        be used to sort arrays with negative numbers. 
+        
+        One common approach is to shift all the elements by a fixed amount, such that the smallest element 
+        becomes non-negative. This can be done by adding the absolute value of the smallest element to all 
+        the elements, and then performing counting sort on the modified array. After sorting, the same shift 
+        can be reversed to obtain the sorted array with negative elements. 
+        
+        However, this approach requires additional computation and memory to store the shifted array, and is 
+        generally less efficient than other sorting algorithms designed for arrays with negative numbers, such 
+        as radix sort or quicksort.
+
+        */
 
 const bubbleSort = (collection) => {
   for (let iteration = 0; iteration < collection.length; iteration++) {
@@ -541,4 +745,52 @@ const mergeSort = (collection) => {
   return mergeArrays(leftResult, rightResult);
 };
 
-export { bubbleSort, selectionSort, insertionSort, quickSort, mergeSort };
+const countingSort = (collection) => {
+  if (collection.length == 1) return collection;
+
+  //Checking if array has negative numbers and throwing an error
+  const minElement = Math.min(...collection);
+  if (minElement < 0) {
+    throw new Error(
+      "This countingSort implementation was not made to deal with negative numbers!"
+    );
+  }
+
+  //Get max element from original collection and build new array with at most maxElement + 1, and also create a sorted array variable
+  const maxElement = Math.max(...collection);
+  const countArray = new Array(maxElement + 1).fill(0);
+  const sortedArray = new Array(collection.length);
+
+  //Use countArray to store the amount of times a given value is repeated inside the original collection
+  for (let index = 0; index < collection.length; index++) {
+    const value = collection[index];
+    countArray[value]++;
+  }
+
+  /* Updates the countArray with the cumulative count of it's elements (so we can stablish the upperBounds of each position in the 
+     original collection) */
+  for (let index = 1; index <= maxElement; index++) {
+    countArray[index] += countArray[index - 1];
+  }
+
+  /* Creating the sorted array by finding the upperBound index of each element of the original array in the count array, and
+     place the elements in the sortedArray */
+  for (let index = collection.length - 1; index >= 0; index--) {
+    const currentElement = collection[index];
+    const upperBound = countArray[currentElement];
+
+    sortedArray[upperBound - 1] = currentElement;
+    countArray[currentElement]--;
+  }
+
+  return sortedArray;
+};
+
+export {
+  bubbleSort,
+  selectionSort,
+  insertionSort,
+  quickSort,
+  mergeSort,
+  countingSort,
+};

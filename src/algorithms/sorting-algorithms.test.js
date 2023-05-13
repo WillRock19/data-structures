@@ -1,4 +1,11 @@
-import { bubbleSort, selectionSort, insertionSort, quickSort, mergeSort } from "./sorting-algorithms";
+import {
+  bubbleSort,
+  selectionSort,
+  insertionSort,
+  quickSort,
+  mergeSort,
+  countingSort,
+} from "./sorting-algorithms";
 
 describe("bubbleSort", () => {
   test("Should order array on best case", () => {
@@ -78,9 +85,29 @@ describe("mergeSort", () => {
 
   test("Should order array on worst case", () => {
     const sortedBackwardsArray = [55, 44, 31, 25, 20, 14];
-    expect(mergeSort(sortedBackwardsArray)).toEqual([
-      14, 20, 25, 31, 44, 55,
-    ]);
+    expect(mergeSort(sortedBackwardsArray)).toEqual([14, 20, 25, 31, 44, 55]);
   });
 });
 
+describe("countingSort", () => {
+  test("Should return the received data if array has a single value", () => {
+    const originalArray = [1];
+    expect(countingSort(originalArray)).toEqual(originalArray);
+  });
+
+  test("Should throw an error if array has a negative number", () => {
+    const originalArray = [-1, -50, 10];
+
+    expect(() => {
+      countingSort(originalArray);
+    }).toThrow(
+      "This countingSort implementation was not made to deal with negative numbers!"
+    );
+  });
+
+  test("Should sort array", () => {
+    const originalArray = [2, 1, 1, 0, 2, 5, 4, 0, 2, 8, 7, 7, 9, 2, 0, 1, 9];
+    const expectedArray = [0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 4, 5, 7, 7, 8, 9, 9];
+    expect(countingSort(originalArray)).toEqual(expectedArray);
+  });
+});
